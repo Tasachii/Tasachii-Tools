@@ -1,0 +1,17 @@
+{
+  "name": "tasachii-tools",
+  "owner": {
+    "name": "Phasathat Jaruchitsophon"
+  },
+  "metadata": {
+    "description": "Phasathat's personal Claude Code skills — calm, precise tools for everyday development work.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "readme-craft",
+      "source": "./plugins/readme-craft",
+      "description": "Writes and rewrites project READMEs in the author's house style: calm, precise, fact-only English prose with native UI strings preserved, table-heavy. Never invents facts — reads the real code or asks."
+    }
+  ]
+}
