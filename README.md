@@ -1,12 +1,29 @@
 # Tasachii-Tools（タサチー・ツールズ）
 
-A personal Claude Code plugin marketplace — calm, precise tools for everyday
-development work. Plugins install on demand and trigger by intent, not config. There is
-no server and no telemetry; everything runs locally inside Claude Code.
+A personal Claude Code plugin marketplace — calm, precise tools for everyday development
+work. Plugins install on demand and trigger by intent, not config. No server, no
+telemetry; everything runs locally inside Claude Code.
 
 **Repo** — https://github.com/Tasachii/Tasachii-Tools · **Owner** — Phasathat Jaruchitsophon
 
----
+## Quick start
+
+Install from GitHub inside Claude Code:
+
+```text
+/plugin marketplace add Tasachii/Tasachii-Tools
+/plugin install readme-craft@tasachii-tools
+```
+
+Restart Claude Code once so the skill loads, then open a project and say `write a readme`.
+
+Developing the marketplace locally instead of from GitHub:
+
+```text
+/plugin marketplace add .
+/plugin install readme-craft@tasachii-tools
+/plugin marketplace update tasachii-tools   # pull the latest after pushing a change
+```
 
 ## Plugins
 
@@ -14,9 +31,7 @@ no server and no telemetry; everything runs locally inside Claude Code.
 | --- | --- | --- |
 | `readme-craft` | 0.1.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 
----
-
-## readme-craft — what it is
+## readme-craft
 
 A Claude Code **skill** that writes, rewrites, and updates project READMEs. It is not a
 command you call with flags — you talk to Claude Code normally and the skill activates
@@ -26,13 +41,16 @@ you when a fact cannot be read, and leaves a visible `<!-- TODO -->` rather than
 The output is calm, table-heavy English prose that keeps your app's native UI strings
 (e.g. Thai labels) exactly as shown.
 
-### What it does
+### How it works
 
-1. **Gathers facts first.** Reads code and config; never assumes.
-2. **Writes in a fixed order.** Title → lead → quick links → screenshots → Description →
-   Installation (Windows + Mac separately) → Running → Tutorial → Architecture →
-   config tables → Roadmap → License, each block split by a `---` rule.
-3. **Validates.** Runs `claude plugin validate` on the result.
+1. **Picks the archetype.** App, library, or backend service — each has its own exemplar
+   and section order (a library leads with a quickstart; an app leads with the experience).
+2. **Gathers facts first.** Reads code and config; never assumes.
+3. **Writes in a fixed order.** Title → lead paragraph → try-it-now → screenshots → why
+   it exists → grouped features → architecture → installation → usage → testing → docs →
+   roadmap → license, using `##` headings.
+4. **Verifies.** Confirms every referenced image and link resolves, re-checks each fact,
+   and runs `claude plugin validate` when the repo is a plugin.
 
 ### How to use it
 
@@ -52,32 +70,11 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
 | Topic | Decision |
 | --- | --- |
 | Facts | Read or ask — never invent. An unverifiable fact becomes a visible TODO, not a guess. |
+| Archetype | One voice, three shapes — app, library, and service each follow their own exemplar. |
+| Comments | Code blocks stay clean; an inline `# ...` is added only when a command's purpose isn't obvious. |
 | Language | English prose, but native UI strings (`บันทึก`, menu labels) are preserved verbatim, never translated away. |
 | Form | Tables and short bullets over long prose; key choices state their *why*. |
 | Tone | Calm, precise, understated. No "fast" / "robust" / "production-ready" filler — concrete numbers only. |
-
----
-
-## Quick start
-
-**Local (test before pushing)**
-```text
-/plugin marketplace add .                     # register this folder as a marketplace
-/plugin install readme-craft@tasachii-tools   # install the README writer
-```
-
-**From GitHub**
-```text
-/plugin marketplace add Tasachii/Tasachii-Tools   # add the published marketplace
-/plugin install readme-craft@tasachii-tools       # install the README writer
-```
-
-After editing the skill, push the change and refresh the local copy:
-```text
-/plugin marketplace update tasachii-tools     # pull the latest from GitHub
-```
-
----
 
 ## Repository layout
 
@@ -93,18 +90,17 @@ Tasachii-Tools/
 │           ├── SKILL.md                       # the skill + workflow
 │           └── references/
 │               ├── style-guide.md             # full house-style rulebook
-│               └── template.md                # fill-in README skeleton
+│               ├── template.md                # fill-in README skeleton
+│               ├── example-tododesu.md        # exemplar — end-user app
+│               ├── example-library.md         # exemplar — library/package
+│               └── example-service.md         # exemplar — backend service
 └── README.md
 ```
-
----
 
 ## Roadmap
 
 - [x] `readme-craft` — README writer
 - [ ] More personal skills, added one at a time
-
----
 
 ## License
 

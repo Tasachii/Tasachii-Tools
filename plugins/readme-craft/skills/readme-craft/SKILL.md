@@ -22,7 +22,28 @@ A marked TODO is always correct; a confident guess is a defect. Vague claims
 
 ## Workflow
 
-### 1 — Gather facts first
+### 1 — Choose the archetype and audience
+
+The house style is one voice, but the *shape* changes with what you are documenting.
+Pick the closest archetype first and read its exemplar — that is the structure to follow:
+
+| Archetype | Exemplar | What leads | What matters most |
+| --- | --- | --- | --- |
+| End-user app (GUI/PWA/mobile, has a live demo or screenshots) | `references/example-tododesu.md` | Lead paragraph → Try it now → screenshots | Features grouped by area, the experience |
+| Library / package (imported by other code) | `references/example-library.md` | **Quickstart** (install + 5-line usage) | API table, compatibility, zero-config use |
+| Backend service / API (deployed, not imported) | `references/example-service.md` | **Quickstart** (run it: `docker compose up`) | Env-var + endpoint tables, deploy, health |
+| CLI tool | `example-tododesu.md` (its CLI section) | Quickstart (install + first command) | Command reference block, flags |
+
+If the project mixes archetypes (e.g. an app *and* a CLI, like TodoDesu), follow the
+dominant one and borrow sections from the others.
+
+**Audience drives ordering.** A library or service is read by developers who want to run
+or import it in 30 seconds — lead with a **Quickstart** *before* the "Why this exists"
+prose. An end-user app or a portfolio piece can lead with the lead paragraph and the
+experience. When the README serves an internal team, drop marketing roadmap/badges and
+add the operational sections (deploy, env, health) instead.
+
+### 2 — Gather facts first
 
 Before writing a single section, collect:
 
@@ -40,11 +61,13 @@ Before writing a single section, collect:
 If a fact is missing and cannot be read, ask the user a short batch of questions
 rather than guessing.
 
-### 2 — Write sections in this exact order
+### 3 — Write sections in this order
 
-This is the canonical shape, modelled on `references/example-tododesu.md` — read that
-file first; it is the target this skill writes toward. Use `##` headings (no `---`
-rules between them, the way the exemplar does). Drop any section that genuinely does
+This is the canonical shape for an **end-user app**, modelled on
+`references/example-tododesu.md`. For a **library or service**, lead with a Quickstart
+and follow `example-library.md` / `example-service.md` instead — the sections below
+still apply, only the order shifts (Quickstart first, screenshots usually dropped).
+Use `##` headings (no `---` rules between them). Drop any section that genuinely does
 not apply; keep the order of the ones that remain.
 
 1. **Title** — `# Name native。` or `Name（native script）` or `Name native — English subtitle`.
@@ -74,7 +97,7 @@ not apply; keep the order of the ones that remain.
 14. **Roadmap** — what shipped and what's next, as prose or a checklist of real plans.
 15. **License** — `MIT © Author name`, plus any domain disclaimer.
 
-### 3 — Style
+### 4 — Style
 
 - Prefer tables and short bullets over long prose.
 - Explain **why** for key design choices — a "Design Decisions" table of `Topic | Decision`.
@@ -84,29 +107,55 @@ not apply; keep the order of the ones that remain.
 - Tone: calm, precise, understated, confident. Japanese-aesthetic flavor **only**
   when the project genuinely has it — never forced.
 
-### 4 — Preserve native UI strings
+### 5 — Preserve native UI strings
 
 When the app shows Thai (or any non-English) button labels, menu items, or copy,
 keep them **exactly** as displayed. Write the surrounding prose in English, but never
 translate the live UI strings away. Example: a button labelled `บันทึก` stays
 `บันทึก` in the README, optionally glossed once in parentheses.
 
-### 5 — Validate
+### 6 — Verify the README itself
 
-After writing, run both checks and report the result:
+A README that links to a missing image or a dead path is a defect. After writing, prove
+the document holds up — do not just eyeball it:
 
-```bash
-claude plugin validate .                          # marketplace manifest
-claude plugin validate plugins/readme-craft       # the plugin manifest
-```
+1. **Every referenced image exists on disk.** List the image paths the README uses and
+   confirm each file is present:
+
+   ```bash
+   grep -oE '!\[[^]]*\]\(([^)]+)\)' README.md | sed -E 's/.*\(([^)]+)\)/\1/' \
+     | while read -r p; do [ -f "$p" ] && echo "ok   $p" || echo "MISS $p"; done
+   ```
+
+   Any `MISS` line means the image link is broken — fix the path or remove the image.
+
+2. **Relative doc links resolve.** Check that local links (e.g. `docs/API.md`) point at
+   files that exist; fix or drop the ones that do not.
+
+3. **No invented facts slipped in.** Re-read every number, command, and URL against the
+   source. Any claim you could not verify must be a visible `<!-- TODO -->`, not prose.
+
+4. **Commands actually run** (when feasible) — at minimum the install and test commands.
+
+5. **Plugin/manifest validation**, when the repo is a Claude plugin or marketplace:
+
+   ```bash
+   claude plugin validate .
+   claude plugin validate plugins/<name>
+   ```
+
+Report the result of each check rather than assuming it passed.
 
 ## References
 
 Load these for the full rules, a worked example, and a ready-to-fill skeleton:
 
-- **`references/example-tododesu.md`** — the canonical style exemplar: a complete, real
-  README in the exact target style. Read this first and match its shape, section order,
-  heading names, bullet detail level, and tone. Copy its *form*, never its facts.
+- **`references/example-tododesu.md`** — exemplar for an **end-user app**: the canonical
+  shape. Read this first for app/PWA/mobile projects. Copy its *form*, never its facts.
+- **`references/example-library.md`** — exemplar for a **library/package**: quickstart
+  first, API table front and centre, no forced native title.
+- **`references/example-service.md`** — exemplar for a **backend service/API**: run-it
+  first, env-var and endpoint tables, deploy and health sections, a status block.
 - **`references/style-guide.md`** — the complete house-style rulebook, with
   BEFORE/AFTER examples. Read this before writing prose.
 - **`references/template.md`** — a fill-in README skeleton with every section as a
