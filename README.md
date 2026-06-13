@@ -56,10 +56,13 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
 
 | You type in Claude Code | What happens |
 | --- | --- |
-| `write a readme` | Reads your code, then drafts a README in house style |
+| `FRM` · `fix readme` | Shortest trigger — "Fix ReadMe"; reads your code and drafts/updates the README |
+| `write a readme` · `make a readme` | Same thing, spelled out |
 | `readme` · `README.md` | Short keyword still triggers |
 | `document this project` | Gathers facts, then writes |
 | *(open a repo with no README)* | It offers to write one |
+
+`FRM` works mid-sentence too — e.g. "FRM for this repo" or "can you fix readme here".
 
 > Restart Claude Code once after installing so the skill loads. Run it **inside** the
 > target project so it can read the real files. Fill in any `<!-- TODO -->` markers it

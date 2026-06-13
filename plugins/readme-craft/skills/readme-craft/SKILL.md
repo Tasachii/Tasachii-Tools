@@ -1,6 +1,6 @@
 ---
 name: readme-craft
-description: This skill should be used when the user wants to create, rewrite, or update a project README. Trigger on 'write a readme', 'readme', 'README.md', 'document this project', or when a repo has no README. Writes READMEs in the author's house style — calm, precise, fact-only, English prose with native UI strings preserved, table-heavy.
+description: This skill should be used when the user wants to create, rewrite, or update a project README. Trigger on 'FRM', 'frm', 'fix readme', 'fix the readme', 'write a readme', 'make a readme', 'craft readme', 'readme', 'README.md', 'document this project', or when a repo has no README. ('FRM' = Fix ReadMe, the short alias.) Writes READMEs in the author's house style — calm, precise, fact-only, English prose with native UI strings preserved, table-heavy.
 ---
 
 # readme-craft
