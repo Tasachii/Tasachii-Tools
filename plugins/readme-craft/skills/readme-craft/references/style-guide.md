@@ -92,31 +92,48 @@ version and link to it.
 **Mac / Linux**
 ```bash
 git clone https://github.com/Tasachii/example.git
-cp .env.example .env        # copy env template
+cd example
+cp .env.example .env
 npm install
 ```
 
 **Windows**
 ```bat
 git clone https://github.com/Tasachii/example.git
-copy .env.example .env       :: copy env template
+cd example
+copy .env.example .env
 npm install
 ```
+
+Add a trailing comment to the `.env` copy only if the user must edit it before
+continuing (e.g. `cp .env.example .env   # then paste your API key`).
 ````
 
 ---
 
 ## 6 — Running guide
 
-Every command in a code block carries an inline `# ...` comment explaining it:
+Keep code blocks clean. Inline `# ...` comments are **optional** — add one only when a
+command's purpose is not obvious from the command itself. Self-explanatory commands
+(`git clone`, `cd`, `npm install`, `npm run dev`, `npm test`) stay bare:
 
 ```bash
-npm run dev        # start Vite dev server on :5173
-npm run build      # type-check + bundle to dist/
-npm run preview    # serve the production build locally
+git clone https://github.com/Tasachii/example.git
+cd example
+npm install
+npm run dev
 ```
 
-No bare command lists — the comment is mandatory.
+Use a comment only where it earns its place — a non-obvious flag, an env-var prefix, or
+a step that needs context:
+
+```bash
+npm run build          # build the web app once
+TODOO_HOST=0.0.0.0 npm start   # serve on the LAN, not just localhost
+```
+
+Never pad an obvious command with a comment that just restates it
+(`npm install   # install dependencies` is noise — delete the comment).
 
 ---
 
@@ -199,13 +216,20 @@ Add a domain disclaimer when relevant, e.g. for a finance app:
 **Example B — running guide**
 
 > ❌ BEFORE
-> ```
-> npm run dev
-> npm run build
+> ```bash
+> git clone https://github.com/Tasachii/example.git   # clone the repo
+> cd example                                           # enter the folder
+> npm install                                          # install dependencies
+> npm run dev                                           # run the dev server
 > ```
 
 > ✓ AFTER
 > ```bash
-> npm run dev        # start Vite dev server on :5173
-> npm run build      # type-check + bundle to dist/
+> git clone https://github.com/Tasachii/example.git
+> cd example
+> npm install
+> npm run dev
 > ```
+
+The comment is only worth keeping when it says something the command does not — a
+non-obvious flag or an env-var prefix, not a restatement of the command.

@@ -42,22 +42,37 @@ rather than guessing.
 
 ### 2 — Write sections in this exact order
 
-Separate each block with a `---` horizontal rule.
+This is the canonical shape, modelled on `references/example-tododesu.md` — read that
+file first; it is the target this skill writes toward. Use `##` headings (no `---`
+rules between them, the way the exemplar does). Drop any section that genuinely does
+not apply; keep the order of the ones that remain.
 
-1. **Title** — `Name（native script）` or `Name native — English subtitle`.
-2. **Badges** — only badges whose data is verified (license, version, live link).
-3. **Lead paragraph** — one dense paragraph: what it does + the core idea. State
-   privacy/local-first explicitly when true ("no server, no account, no tracking").
-4. **Quick links** — live demo · docs · issues, as a compact row.
-5. **Screenshots table** — only images that exist on disk.
-6. **Project Description** — what problem it solves, who it's for.
-7. **Installation** — separate Windows vs Mac blocks; state runtime version + link.
-8. **Running guide** — every command in a code block carries an inline `# ...` comment.
-9. **Tutorial / Usage** — numbered steps or bold lead-ins ("**Log an expense (3 taps).**").
-10. **Architecture** — only when non-trivial; a short diagram or a Topic | Decision table.
-11. **Config / API tables** — options, env vars, endpoints, as tables.
-12. **Roadmap** — checked/unchecked list of real plans.
-13. **License** — `MIT © Author name`, plus any domain disclaimer.
+1. **Title** — `# Name native。` or `Name（native script）` or `Name native — English subtitle`.
+2. **Lead paragraph** — one dense paragraph right under the title: what it does + the
+   core idea, ending with the privacy/local-first stance when true
+   ("No accounts, no cloud, no tracking.").
+3. **Try it now** — `**Try it now:** <url>` when there is a live demo. (Badges are
+   optional and only used when their data is verified — license, version.)
+4. **Screenshots** — paired 2-column tables with a descriptive caption per image in the
+   header row (`| Today — Wa theme | Focus — ensō ring |`). Only images that exist on disk.
+5. **Why this exists** — the choice or insight the project resolves; the core design idea.
+6. **Features** — grouped under `###` subheadings (e.g. Task management / Views /
+   Platform). Bullets are full, specific sentences with parenthetical detail; **bold**
+   the marquee items. This is where the README earns its detail.
+7. **Architecture** — an ASCII diagram and/or a package/module table
+   (`Package | Role | Key technology`), then a "Design decisions worth noting:" list of
+   **bold lead-in.** bullets that each explain *why*.
+8. **Requirements** — runtime versions and OS notes, as bullets.
+9. **Installation** — clean code blocks (no comments); prose between blocks for context.
+   Split Windows vs Mac only when the commands actually differ.
+10. **Usage** — `###` subsections as needed: Development · (Hosting/Deploy) · Daily use ·
+    CLI reference (aligned plain block) · a short numbered tutorial · Configuration table.
+11. **Running commands** — keep code blocks clean. Add an inline `# ...` comment only
+    when a command's purpose isn't obvious; never annotate self-explanatory commands.
+12. **Testing** — the command plus one line on what the suite covers.
+13. **Project documentation** — bullet list of doc links, each with an `—` description.
+14. **Roadmap** — what shipped and what's next, as prose or a checklist of real plans.
+15. **License** — `MIT © Author name`, plus any domain disclaimer.
 
 ### 3 — Style
 
@@ -87,8 +102,11 @@ claude plugin validate plugins/readme-craft       # the plugin manifest
 
 ## References
 
-Load these for the full rules and a ready-to-fill skeleton:
+Load these for the full rules, a worked example, and a ready-to-fill skeleton:
 
+- **`references/example-tododesu.md`** — the canonical style exemplar: a complete, real
+  README in the exact target style. Read this first and match its shape, section order,
+  heading names, bullet detail level, and tone. Copy its *form*, never its facts.
 - **`references/style-guide.md`** — the complete house-style rulebook, with
   BEFORE/AFTER examples. Read this before writing prose.
 - **`references/template.md`** — a fill-in README skeleton with every section as a
