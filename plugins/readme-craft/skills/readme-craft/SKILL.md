@@ -31,6 +31,7 @@ Pick the closest archetype first and read its exemplar — that is the structure
 | --- | --- | --- | --- |
 | End-user app (GUI/PWA/mobile, has a live demo or screenshots) | `references/example-tododesu.md` | Lead paragraph → Try it now → screenshots | Features grouped by area, the experience |
 | Library / package (imported by other code) | `references/example-library.md` | **Quickstart** (install + 5-line usage) | API table, compatibility, zero-config use |
+| Public OSS project (accepts contributions) | `references/example-oss-library.md` | **Quickstart** + a Contents TOC | Badges, API, Contributing/Security/Conduct sibling files |
 | Backend service / API (deployed, not imported) | `references/example-service.md` | **Quickstart** (run it: `docker compose up`) | Env-var + endpoint tables, deploy, health |
 | CLI tool | `example-tododesu.md` (its CLI section) | Quickstart (install + first command) | Command reference block, flags |
 
@@ -69,6 +70,13 @@ and follow `example-library.md` / `example-service.md` instead — the sections 
 still apply, only the order shifts (Quickstart first, screenshots usually dropped).
 Use `##` headings (no `---` rules between them). Drop any section that genuinely does
 not apply; keep the order of the ones that remain.
+
+**Long READMEs get a Contents list.** When the README runs past ~6 sections or one
+screen, add a `## Contents` table-of-contents with anchor links right after the lead
+(or after the badges), the way `references/example-oss-library.md` does. Short ones
+don't need it. **Public OSS projects** also reference their sibling files from the body
+— a Contributing section linking `CONTRIBUTING.md`, a Security section linking
+`SECURITY.md`, and the `CODE_OF_CONDUCT.md` — rather than inlining all of it.
 
 1. **Title** — `# Name native。` or `Name（native script）` or `Name native — English subtitle`.
 2. **Lead paragraph** — one dense paragraph right under the title: what it does + the
@@ -146,6 +154,11 @@ the document holds up — do not just eyeball it:
 
 Report the result of each check rather than assuming it passed.
 
+**Keep links from rotting later.** The checks above are a one-time pass; external links
+still die over time. For any repo with CI, offer to drop in the ready-made workflow at
+`references/workflow-link-check.yml` (copy it to `.github/workflows/link-check.yml`) —
+it re-checks every Markdown link on each push and weekly via lychee.
+
 ## References
 
 Load these for the full rules, a worked example, and a ready-to-fill skeleton:
@@ -156,6 +169,10 @@ Load these for the full rules, a worked example, and a ready-to-fill skeleton:
   first, API table front and centre, no forced native title.
 - **`references/example-service.md`** — exemplar for a **backend service/API**: run-it
   first, env-var and endpoint tables, deploy and health sections, a status block.
+- **`references/example-oss-library.md`** — exemplar for a **public OSS project**: a
+  Contents TOC, badges, and Contributing/Security/Conduct sibling-file references.
+- **`references/workflow-link-check.yml`** — a copy-ready GitHub Action that re-checks
+  every Markdown link on push and weekly; drop it in at `.github/workflows/`.
 - **`references/style-guide.md`** — the complete house-style rulebook, with
   BEFORE/AFTER examples. Read this before writing prose.
 - **`references/template.md`** — a fill-in README skeleton with every section as a

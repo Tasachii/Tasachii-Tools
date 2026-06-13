@@ -151,6 +151,27 @@ Keep each step to one action.
 
 ---
 
+## 7b — Table of contents & sibling files
+
+A short README needs no table of contents. Once it runs past ~6 sections or one screen —
+typical of a public OSS library — add a `## Contents` list of anchor links right after
+the lead paragraph or badges:
+
+```markdown
+## Contents
+
+- [Quickstart](#quickstart)
+- [API](#api)
+- [Contributing](#contributing)
+- [Security](#security)
+```
+
+For public projects, link the sibling governance files from the body instead of inlining
+them — a Contributing section pointing at `CONTRIBUTING.md`, a Security section at
+`SECURITY.md`, and a Code of Conduct reference. See `references/example-oss-library.md`.
+
+---
+
 ## 8 — Native UI strings
 
 Preserve the app's real labels exactly. Surrounding prose is English; the live strings

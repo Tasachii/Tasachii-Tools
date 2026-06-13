@@ -48,9 +48,10 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
 2. **Gathers facts first.** Reads code and config; never assumes.
 3. **Writes in a fixed order.** Title → lead paragraph → try-it-now → screenshots → why
    it exists → grouped features → architecture → installation → usage → testing → docs →
-   roadmap → license, using `##` headings.
+   roadmap → license, using `##` headings (with a Contents TOC when it runs long).
 4. **Verifies.** Confirms every referenced image and link resolves, re-checks each fact,
-   and runs `claude plugin validate` when the repo is a plugin.
+   and runs `claude plugin validate` when the repo is a plugin. For repos with CI it can
+   drop in a link-check Action so links keep working after the README ships.
 
 ### How to use it
 
@@ -73,7 +74,8 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
 | Topic | Decision |
 | --- | --- |
 | Facts | Read or ask — never invent. An unverifiable fact becomes a visible TODO, not a guess. |
-| Archetype | One voice, three shapes — app, library, and service each follow their own exemplar. |
+| Archetype | One voice, four shapes — app, library, service, and public OSS each follow their own exemplar. |
+| Link rot | Verification runs at write time; a copy-ready CI Action keeps links checked afterward. |
 | Comments | Code blocks stay clean; an inline `# ...` is added only when a command's purpose isn't obvious. |
 | Language | English prose, but native UI strings (`บันทึก`, menu labels) are preserved verbatim, never translated away. |
 | Form | Tables and short bullets over long prose; key choices state their *why*. |
@@ -83,6 +85,7 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
 
 ```text
 Tasachii-Tools/
+├── .github/workflows/link-check.yml   # CI — re-checks every Markdown link
 ├── .claude-plugin/
 │   ├── marketplace.json        # marketplace manifest (name: tasachii-tools)
 │   └── README.md               # install guide
@@ -96,7 +99,9 @@ Tasachii-Tools/
 │               ├── template.md                # fill-in README skeleton
 │               ├── example-tododesu.md        # exemplar — end-user app
 │               ├── example-library.md         # exemplar — library/package
-│               └── example-service.md         # exemplar — backend service
+│               ├── example-service.md         # exemplar — backend service
+│               ├── example-oss-library.md     # exemplar — public OSS project
+│               └── workflow-link-check.yml    # copy-ready link-check Action
 └── README.md
 ```
 

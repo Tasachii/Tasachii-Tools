@@ -1,0 +1,30 @@
+# Ready-to-copy GitHub Action that keeps README/Markdown links from rotting.
+# Drop this into a project as .github/workflows/link-check.yml.
+# It runs on every push/PR that touches Markdown, and weekly to catch external links
+# that die over time. Uses lychee — fast, handles relative paths and anchors.
+
+name: Link check
+
+on:
+  push:
+    paths: ["**/*.md"]
+  pull_request:
+    paths: ["**/*.md"]
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC — catches external links that died since
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Fail the job on broken links. Drop --no-progress in local runs for output.
+          args: --no-progress --verbose "**/*.md"
+          fail: true
