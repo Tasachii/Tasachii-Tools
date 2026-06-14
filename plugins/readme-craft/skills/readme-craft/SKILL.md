@@ -56,7 +56,7 @@ Before writing a single section, collect:
 | License | `LICENSE` file, `package.json` `license` |
 | Author | `package.json` `author`, git config, ask user |
 | Local-first / offline | service-worker, no-backend, localStorage usage |
-| Screenshots | `docs/`, `assets/`, `.github/` image files that actually exist |
+| Screenshots | `docs/`, `assets/`, `.github/` image files that actually exist — if none exist and it is a visual app, plan to **ask the user to capture them** (see §3.4) |
 | Node / runtime version | `engines`, `.nvmrc`, `.tool-versions` |
 
 If a fact is missing and cannot be read, ask the user a short batch of questions
@@ -84,8 +84,23 @@ don't need it. **Public OSS projects** also reference their sibling files from t
    ("No accounts, no cloud, no tracking.").
 3. **Try it now** — `**Try it now:** <url>` when there is a live demo. (Badges are
    optional and only used when their data is verified — license, version.)
-4. **Screenshots** — paired 2-column tables with a descriptive caption per image in the
-   header row (`| Today — Wa theme | Focus — ensō ring |`). Only images that exist on disk.
+4. **Screenshots — drive them in for any visual app.** Paired 2-column tables with a
+   descriptive caption per image in the header row (`| Today — Wa theme | Focus — ensō
+   ring |`), exactly like `references/example-tododesu.md`. Reference **only images that
+   exist on disk** — never link a file that is not there. But for an end-user app
+   (web/PWA/mobile/desktop), a screenshot demo is the point of the README — what makes
+   TodoDesu and Pocketo worth opening — so **do not silently drop this section when the
+   app has no images yet.** Instead, actively get them in:
+   - **Name the shots to capture** — 2–6 specific views: the home/list screen, the main
+     action, a signature feature, and a dark/alt theme if there is one.
+   - **Give an exact path and naming** — tell the user to save to `docs/images/` as e.g.
+     `today-wa.jpg`, `focus-wa.jpg`; the table pairs them two-up.
+   - **Offer the capture method** — OS screenshot, a browser/device frame, recommended
+     width (~1200px for web, the real device frame for mobile).
+   - **Scaffold, don't fake** — until the files land, write the 2-column table with the
+     agreed paths *behind a visible `<!-- TODO: add screenshot docs/images/today-wa.jpg
+     -->`* marker, not a live (broken) image link. The section is then ready the moment
+     the images are dropped in, and the never-invent rule still holds.
 5. **Why this exists** — the choice or insight the project resolves; the core design idea.
 6. **Features** — grouped under `###` subheadings (e.g. Task management / Views /
    Platform). Bullets are full, specific sentences with parenthetical detail; **bold**

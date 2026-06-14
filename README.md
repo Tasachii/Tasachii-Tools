@@ -30,7 +30,7 @@ Developing the marketplace locally instead of from GitHub:
 
 | Plugin | Version | What it does |
 | --- | --- | --- |
-| `readme-craft` | 0.2.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
+| `readme-craft` | 0.3.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 
 ## readme-craft
 
@@ -109,6 +109,7 @@ the way when you actually mean `run tsc`, `tsc --noEmit`, or any real build comm
 | Topic | Decision |
 | --- | --- |
 | Facts | Read or ask — never invent. An unverifiable fact becomes a visible TODO, not a guess. |
+| Screenshots | For a visual app it drives the demo in — names the views to capture, gives a `docs/images/` path, and scaffolds the table behind a `<!-- TODO -->` until the files land. Never a broken image link. |
 | Archetype | One voice, four shapes — app, library, service, and public OSS each follow their own exemplar. |
 | Link rot | Verification runs at write time; a copy-ready CI Action keeps links checked afterward. |
 | Comments | Code blocks stay clean; an inline `# ...` is added only when a command's purpose isn't obvious. |

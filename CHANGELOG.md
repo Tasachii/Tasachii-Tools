@@ -4,6 +4,16 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.3.0 — 2026-06-14
+
+### Added
+- `readme-craft`: a proactive screenshot-demo workflow. For a visual app (web/PWA/mobile/
+  desktop) with no images on disk, the skill no longer drops the screenshots section — it
+  names the specific views to capture, gives a `docs/images/` path and naming convention,
+  offers a capture method, and scaffolds the two-column table behind a visible
+  `<!-- TODO -->` until the files land. No broken image links; the never-invent rule still
+  holds. This brings new READMEs in line with the TodoDesu / Pocketo screenshot demos.
+
 ## 0.2.0 — 2026-06-14
 
 ### Added
