@@ -1,6 +1,6 @@
 ---
 name: readme-craft
-description: This skill should be used when the user wants to create, rewrite, or update a project README. Trigger on 'tsc', 'TSC', 'FRM', 'frm', 'fix readme', 'fix the readme', 'write a readme', 'make a readme', 'craft readme', 'readme', 'README.md', 'document this project', or when a repo has no README. ('tsc' and 'FRM' are the short aliases — 'tsc' = the Tasachii-Tools brand shorthand for "fix the readme", 'FRM' = Fix ReadMe.) Writes READMEs in the author's house style — calm, precise, fact-only, English prose with native UI strings preserved, table-heavy.
+description: This skill should be used when the user wants to create, rewrite, or update a project README. Trigger on 'tsc', 'TSC', 'FRM', 'frm', 'fix readme', 'fix the readme', 'write a readme', 'make a readme', 'craft readme', 'readme', 'README.md', 'document this project', or when a repo has no README. ('tsc' and 'FRM' are the short aliases — 'tsc' = the Tasachii-Tools brand shorthand for "fix the readme", 'FRM' = Fix ReadMe.) IMPORTANT — 'tsc' triggers this skill ONLY as a bare README request; do NOT trigger when the user means the TypeScript compiler — i.e. skip when 'tsc' is part of build/compile intent such as 'run tsc', 'tsc --noEmit', 'tsc -b', 'tsc --watch', 'npx tsc', a tsc error/output, or any path/flag after it. Writes READMEs in the author's house style — calm, precise, fact-only, English prose with native UI strings preserved, table-heavy.
 ---
 
 # readme-craft

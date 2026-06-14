@@ -97,6 +97,8 @@ Every hype word in the "before" is gone because none of it could be read from th
 | *(open a repo with no README)* | It offers to write one |
 
 `tsc` and `FRM` work mid-sentence too — e.g. "tsc this repo" or "can you fix readme here".
+`tsc` here means *Tasachii — fix the readme*, not the TypeScript compiler: it stays out of
+the way when you actually mean `run tsc`, `tsc --noEmit`, or any real build command.
 
 > Restart Claude Code once after installing so the skill loads. Run it **inside** the
 > target project so it can read the real files. Fill in any `<!-- TODO -->` markers it
