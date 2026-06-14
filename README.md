@@ -15,7 +15,8 @@ Install from GitHub inside Claude Code:
 /plugin install readme-craft@tasachii-tools
 ```
 
-Restart Claude Code once so the skill loads, then open a project and say `write a readme`.
+Restart Claude Code once so the skill loads, then open a project and say `tsc` (or
+`write a readme`).
 
 Developing the marketplace locally instead of from GitHub:
 
@@ -53,17 +54,49 @@ The output is calm, table-heavy English prose that keeps your app's native UI st
    and runs `claude plugin validate` when the repo is a plugin. For repos with CI it can
    drop in a link-check Action so links keep working after the README ships.
 
+### See it in action
+
+There is no web URL to open — `readme-craft` is a skill, not a hosted app. Its "demo" is
+the transformation itself: you say `tsc` inside a repo, and a thin or missing README
+becomes a fact-checked one. A typical Claude Code session looks like this:
+
+```text
+you ›  tsc
+
+readme-craft ›  Reading the repo… found package.json (React 18 · Vite · Tailwind),
+                LICENSE (MIT), homepage → https://tasachii.github.io/Pocketo/,
+                3 screenshots in docs/images/. No test script found.
+
+                Q: Is "kakeibo budgeting" the right one-line description?  [Y/n]
+you ›           y
+
+readme-craft ›  Wrote README.md (title → lead → try-it-now → screenshots → features →
+                architecture → install → usage → license).
+                Verified: 3/3 images exist, 4/4 links resolve, `claude plugin validate` ✓.
+                Left 1 TODO: <!-- TODO: confirm test count — no test script in package.json -->
+```
+
+The before/after on a lead paragraph — the single most-rewritten line in any README:
+
+| | Lead paragraph |
+| --- | --- |
+| **Before** | A blazingly fast, fully-featured, production-ready expense tracker built with cutting-edge web technologies for a seamless experience. |
+| **After** | Pocketo is a kakeibo-style expense tracker that runs entirely in the browser — no server, no account, no tracking. Log income and spending in three taps; the month's balance updates as you type. Data lives in `localStorage` and stays on the device. |
+
+The "after" keeps only what the code proves: the stack, the storage choice, the tap count.
+Every hype word in the "before" is gone because none of it could be read from the repo.
+
 ### How to use it
 
 | You type in Claude Code | What happens |
 | --- | --- |
-| `FRM` · `fix readme` | Shortest trigger — "Fix ReadMe"; reads your code and drafts/updates the README |
+| `tsc` · `FRM` · `fix readme` | Shortest triggers — `tsc` (Tasachii-Tools shorthand) and `FRM` ("Fix ReadMe"); reads your code and drafts/updates the README |
 | `write a readme` · `make a readme` | Same thing, spelled out |
 | `readme` · `README.md` | Short keyword still triggers |
 | `document this project` | Gathers facts, then writes |
 | *(open a repo with no README)* | It offers to write one |
 
-`FRM` works mid-sentence too — e.g. "FRM for this repo" or "can you fix readme here".
+`tsc` and `FRM` work mid-sentence too — e.g. "tsc this repo" or "can you fix readme here".
 
 > Restart Claude Code once after installing so the skill loads. Run it **inside** the
 > target project so it can read the real files. Fill in any `<!-- TODO -->` markers it
