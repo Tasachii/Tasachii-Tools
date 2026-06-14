@@ -30,7 +30,7 @@ Developing the marketplace locally instead of from GitHub:
 
 | Plugin | Version | What it does |
 | --- | --- | --- |
-| `readme-craft` | 0.1.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
+| `readme-craft` | 0.2.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 
 ## readme-craft
 
@@ -137,6 +137,7 @@ Tasachii-Tools/
 │               ├── example-service.md         # exemplar — backend service
 │               ├── example-oss-library.md     # exemplar — public OSS project
 │               └── workflow-link-check.yml    # copy-ready link-check Action
+├── CHANGELOG.md
 └── README.md
 ```
 
