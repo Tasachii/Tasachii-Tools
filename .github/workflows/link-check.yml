@@ -20,5 +20,12 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress --verbose "**/*.md"
+          # The reference exemplars are illustrative sample READMEs — their
+          # relative links (docs/, CONTRIBUTING.md, images, github.com/.../example)
+          # are part of the example and intentionally do not resolve in this repo.
+          # Check only the real, human-facing docs.
+          args: >-
+            --no-progress --verbose
+            --exclude-path plugins/readme-craft/skills/readme-craft/references
+            "**/*.md"
           fail: true
