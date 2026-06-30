@@ -10,7 +10,7 @@ telemetry; everything runs locally inside Claude Code.
 
 - [Quick start](#quick-start)
 - [Plugins](#plugins)
-- [readme-craft](#readme-craft) · [caffe](#caffe) · [qa](#qa)
+- [readme-craft](#readme-craft) · [caffe](#caffe) · [qa](#qa) · [slide-craft](#slide-craft)
 - [Repository layout](#repository-layout)
 - [Roadmap](#roadmap) · [Versioning](#versioning) · [License](#license)
 
@@ -23,10 +23,11 @@ Install from GitHub inside Claude Code, then add the plugins you want:
 /plugin install readme-craft@tasachii-tools
 /plugin install caffe@tasachii-tools
 /plugin install qa@tasachii-tools
+/plugin install slide-craft@tasachii-tools
 ```
 
 Restart Claude Code once so the skills load, then trigger by intent — say `tsc` for a README,
-`/caffe` to keep the Mac awake, or `/qa` to score a project.
+`/caffe` to keep the Mac awake, `/qa` to score a project, or `/slides` to build a deck.
 
 Developing the marketplace locally instead of from GitHub:
 
@@ -43,6 +44,7 @@ Developing the marketplace locally instead of from GitHub:
 | `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 | `caffe` | 0.2.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only (guards non-macOS). |
 | `qa` | 0.1.0 | Smoke-tests and QAs a project, scores it from four angles (CTO · tech lead · UX/UI · QA), and lists every fixable flaw. Asks before fixing. |
+| `slide-craft` | 0.1.0 | Builds a self-contained HTML deck that designs itself around the topic — grounded in your real content (never invented), Thai/English aware, with presenter notes and an automatic 1920×1080 overflow self-check. |
 
 ## readme-craft
 
@@ -163,6 +165,55 @@ explicit five-point checklist shown with ✓ / ⚠ / ✗ — then lists every we
 `file:line`, why it matters, and how to fix it. **It never fixes on its own — it scores, then asks**
 whether to fix all, only the critical items, or none.
 
+## slide-craft
+
+A Claude Code **skill** that builds a presentation as a single self-contained HTML file —
+zero dependencies, authored at a fixed 1920×1080 stage that scales to any screen, 16:9
+everywhere. You talk to Claude Code normally (`/slides`, "turn this repo into a deck",
+"ทำสไลด์") and it designs the deck around the subject, grounded in your real content.
+
+It improves on a plain slide generator in five ways: it **grounds content** in your real
+material (a repo, URL, or file) and never invents a number, feature, or name — it asks or
+leaves a visible `[[TODO]]`; **Thai/English is first-class** (correct font pairing,
+mixed-script spacing, TH/EN layouts); it **verifies itself** by screenshotting every slide at
+1920×1080 and fixing overflow before handing it over; slides are **present-ready** (an
+explanatory line plus a hidden speaker note, not bare headlines); and it runs **auto by
+default** — no questionnaire, one strong design, shown.
+
+The look is chosen *for the topic* — a distinctive display face, a committed palette, one
+atmospheric device — never generic AI-slop. The deck signs itself with **no name** unless you
+give one: a presenter or brand name is content, so it asks rather than assuming.
+
+### How to use it
+
+| You type in Claude Code | What happens |
+| --- | --- |
+| `/slides` · `make a deck` · `ทำสไลด์` | Builds a deck — grounds content, picks a design, generates, self-verifies, opens it |
+| `turn this repo into a deck` · `<path>` · `<url>` | Reads the real source first, then builds from it |
+| `convert deck.pptx` | Extracts text, images, and notes, then redesigns to web |
+| `interview me first` | Runs the fuller purpose / length / density questions before building |
+| `improve this deck.html` | Reads the deck, keeps its design system, re-verifies after edits |
+
+Navigate with arrow keys / space / swipe. Press **E** to edit text in place (⌘/Ctrl+S saves),
+**N** to show speaker notes. After it builds, it offers to deploy to a live URL or export a PDF.
+
+> Restart Claude Code once after installing so the skill loads. The visual self-check needs
+> Node + Playwright (it installs Chromium on first run); without them it falls back to a
+> manual pass and says so.
+
+### Design decisions
+
+| Topic | Decision |
+| --- | --- |
+| Content | Grounded, never invented — read the source, ask, or leave a visible `[[TODO]]`. A made-up stat on a pitch deck is the failure this prevents. |
+| Names | A presenter / brand / author name is content — asked for, never defaulted. The skill ships nameless so anyone can use it. |
+| Thai | First-class: every font stack carries a Thai face, mixed script gets pangu spacing, no synthetic italic or uppercase on Thai. |
+| Verification | Screenshots every slide at 1920×1080 and fixes overflow / overlap before delivery — not a `scrollHeight` guess. |
+| Density | Present-ready — an explanatory line on the slide plus a hidden speaker note, not telegraphic headlines. |
+| Design | Chosen for the topic, anti-slop — one distinctive face, a committed palette, one atmospheric device. Presets are launch pads, not skins. |
+| Output | One self-contained `.html`, fixed 1920×1080 stage, inline edit + speaker notes, deploy / PDF on request. |
+| Credit | An independent rewrite of the approach in zarazhangrui's MIT `frontend-slides`; no files copied. |
+
 ## Repository layout
 
 ```text
@@ -193,11 +244,22 @@ Tasachii-Tools/
 │   ├── caffe/
 │   │   ├── .claude-plugin/plugin.json
 │   │   └── skills/caffe/SKILL.md           # keep-awake (caffeinate) utility
-│   └── qa/
+│   ├── qa/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/qa/
+│   │       ├── SKILL.md                    # the four-angle QA procedure
+│   │       └── references/rubric.md        # 10-point scale + output format
+│   └── slide-craft/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/qa/
-│           ├── SKILL.md                    # the four-angle QA procedure
-│           └── references/rubric.md        # 10-point scale + output format
+│       └── skills/slide-craft/
+│           ├── SKILL.md                    # the deck builder + workflow
+│           ├── references/
+│           │   ├── viewport-base.css       # mandatory fixed-stage CSS
+│           │   ├── style-presets.md        # anti-slop starting points + rules
+│           │   ├── thai-bilingual.md       # Thai/EN type pairing + spacing
+│           │   ├── html-architecture.md    # skeleton, nav JS, inline edit, notes
+│           │   └── verifying.md            # screenshot self-check loop
+│           └── scripts/screenshot-check.mjs  # Playwright overflow/overlap checker
 ├── CHANGELOG.md
 └── README.md
 ```
@@ -207,6 +269,7 @@ Tasachii-Tools/
 - [x] `readme-craft` — README writer
 - [x] `caffe` — keep-awake utility
 - [x] `qa` — four-angle project QA
+- [x] `slide-craft` — topic-aware HTML deck builder
 - [ ] More personal skills, added one at a time
 
 ## Versioning

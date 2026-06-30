@@ -4,6 +4,26 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.7.0 — 2026-06-30
+
+### Added
+- `slide-craft`: a new plugin that builds a single self-contained HTML slide deck which
+  designs itself around the topic. It grounds every slide in the user's real content (a repo,
+  URL, or file) and never invents a number, feature, or name — it asks or leaves a visible
+  `[[TODO]]`; treats Thai/English as first-class (font pairing, mixed-script spacing, TH/EN
+  layouts); verifies its own output by screenshotting every slide at 1920×1080 and fixing
+  overflow before delivery; writes present-ready slides (an explanatory line plus a hidden
+  speaker note, not bare headlines); and runs auto by default (no interview unless asked). A
+  presenter/brand name is treated as content — asked for, never defaulted — so the deck ships
+  nameless. Includes a fixed-stage `viewport-base.css`, curated anti-slop style presets, a
+  Thai/bilingual typography guide, an HTML/JS architecture reference, and a Playwright
+  `screenshot-check.mjs`. An independent rewrite of the approach in zarazhangrui's MIT
+  `frontend-slides`; no files copied.
+
+### Changed
+- Marketplace `metadata.version` → 0.7.0 (the catalog grew: `slide-craft` added). Plugin
+  versions are unaffected — `readme-craft` stays at 0.4.0, `caffe` at 0.2.0, `qa` at 0.1.0.
+
 ## 0.6.1 — 2026-06-30
 
 ### Added
