@@ -4,6 +4,14 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.4.0 — 2026-06-30
+
+### Added
+- `readme-craft`: `/fix readme` (and `/fix-readme`, `fix readme`) as an explicit, immediate
+  trigger. Typing it is treated as an unambiguous instruction to fix the current project's
+  README — the skill begins the workflow right away instead of asking what the user means.
+  Complements the existing `tsc` / `FRM` short aliases.
+
 ## 0.3.0 — 2026-06-14
 
 ### Added
