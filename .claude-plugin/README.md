@@ -32,6 +32,7 @@ no README.
 | --- | --- |
 | `readme-craft` | Create, rewrite, or update project READMEs in a calm, precise, fact-only house style — never invents facts. |
 | `caffe` | Keep the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only. |
+| `qa` | Smoke-test and QA a project, score it from four angles (CTO · tech lead · UX/UI · QA), and list every fixable flaw. Asks before fixing. |
 
 ## License
 

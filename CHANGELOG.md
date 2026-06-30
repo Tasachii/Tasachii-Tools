@@ -4,6 +4,19 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.6.0 — 2026-06-30
+
+### Added
+- `qa`: a new plugin that smoke-tests and QAs a whole project, then scores it from four angles
+  — CTO, tech lead, UX/UI designer, and QA tester — and returns a detailed, fixable weakness
+  list (severity, `file:line`, why it matters, how to fix). It runs the project's own
+  build / lint / test / validate, and for a web app drives a local browser via the
+  chrome-devtools MCP (free, local). It never auto-fixes — it scores, then asks.
+
+### Changed
+- Marketplace `metadata.version` → 0.6.0 (the catalog grew: `qa` added). Plugin versions are
+  unaffected — `readme-craft` stays at 0.4.0, `caffe` at 0.1.0.
+
 ## 0.5.0 — 2026-06-30
 
 ### Added

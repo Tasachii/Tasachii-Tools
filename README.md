@@ -32,6 +32,7 @@ Developing the marketplace locally instead of from GitHub:
 | --- | --- | --- |
 | `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 | `caffe` | 0.1.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only. |
+| `qa` | 0.1.0 | Smoke-tests and QAs a project, scores it from four angles (CTO · tech lead · UX/UI · QA), and lists every fixable flaw. Asks before fixing. |
 
 ## readme-craft
 
@@ -134,6 +135,23 @@ process; nothing is installed and nothing persists past a reboot.
 > Code session — but not a reboot. Closing the laptop lid with no external display or power
 > still sleeps. It can set a permanent `sudo pmset` policy, but only if you ask.
 
+## qa
+
+Smoke-test and QA a whole project, then score it the way four reviewers would — CTO, tech lead,
+UX/UI designer, and QA tester — and get back a precise, fixable list of what's wrong. It runs the
+project's own checks (`build` / `lint` / `test` / `validate`); for a web app it drives a local
+browser via the chrome-devtools MCP (free, on your machine, nothing sent to a cloud).
+
+| You type in Claude Code | What happens |
+| --- | --- |
+| `/qa` · `qa this` · `ตรวจโปรเจค` | Smoke-tests the current project and scores it from four angles |
+| `/qa localhost:5173` · `qa <url>` | Drives the web app in a local browser, then scores the flow |
+| `rate this` · `score this project` | Same — a quality verdict with evidence |
+
+It leads with a four-angle scorecard (`N/10` each plus an overall), then lists every weakness with a
+severity tag, `file:line`, why it matters, and how to fix it. **It never fixes on its own — it
+scores, then asks** whether to fix all, only the critical items, or none.
+
 ## Repository layout
 
 ```text
@@ -158,9 +176,14 @@ Tasachii-Tools/
 │   │           ├── example-service.md         # exemplar — backend service
 │   │           ├── example-oss-library.md     # exemplar — public OSS project
 │   │           └── workflow-link-check.yml    # copy-ready link-check Action
-│   └── caffe/
+│   ├── caffe/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/caffe/SKILL.md           # keep-awake (caffeinate) utility
+│   └── qa/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/caffe/SKILL.md           # keep-awake (caffeinate) utility
+│       └── skills/qa/
+│           ├── SKILL.md                    # the four-angle QA procedure
+│           └── references/rubric.md        # 10-point scale + output format
 ├── CHANGELOG.md
 └── README.md
 ```
@@ -169,6 +192,7 @@ Tasachii-Tools/
 
 - [x] `readme-craft` — README writer
 - [x] `caffe` — keep-awake utility
+- [x] `qa` — four-angle project QA
 - [ ] More personal skills, added one at a time
 
 ## Versioning

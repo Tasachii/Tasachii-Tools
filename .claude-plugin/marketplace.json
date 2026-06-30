@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Phasathat's personal Claude Code skills — calm, precise tools for everyday development work.",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {
@@ -17,6 +17,11 @@
       "name": "caffe",
       "source": "./plugins/caffe",
       "description": "Keep this Mac awake while long jobs run — a thin wrapper over macOS `caffeinate` with plain-language on / off / status. macOS only."
+    },
+    {
+      "name": "qa",
+      "source": "./plugins/qa",
+      "description": "Smoke-test and QA a whole project, then score it from four angles — CTO, tech lead, UX/UI designer, QA tester — with a detailed, fixable weakness list. Drives a local browser for web apps. Never auto-fixes; it scores, then asks."
     }
   ]
 }
