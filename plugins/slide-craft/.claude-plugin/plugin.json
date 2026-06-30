@@ -1,0 +1,8 @@
+{
+  "name": "slide-craft",
+  "version": "0.1.0",
+  "description": "Build zero-dependency HTML slide decks that design themselves around the topic — grounded in your real content (a repo, URL, or file, never invented), Thai/English bilingual-aware, with presenter notes and an automatic 1920x1080 overflow self-check.",
+  "author": {
+    "name": "Phasathat Jaruchitsophon"
+  }
+}

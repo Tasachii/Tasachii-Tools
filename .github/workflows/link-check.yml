@@ -20,12 +20,13 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          # The reference exemplars are illustrative sample READMEs — their
-          # relative links (docs/, CONTRIBUTING.md, images, github.com/.../example)
-          # are part of the example and intentionally do not resolve in this repo.
+          # The reference docs are illustrative skill material — their sample
+          # links and code-block URLs (docs/, images, font CDN snippets) are part
+          # of the example and are not meant to resolve in this repo.
           # Check only the real, human-facing docs.
           args: >-
             --no-progress --verbose
             --exclude-path plugins/readme-craft/skills/readme-craft/references
+            --exclude-path plugins/slide-craft/skills/slide-craft/references
             "**/*.md"
           fail: true
