@@ -1,0 +1,8 @@
+{
+  "name": "craft-caffe",
+  "version": "0.2.0",
+  "description": "Keep this Mac awake while long jobs run — a thin wrapper over macOS `caffeinate` with plain-language on / off / status. macOS only.",
+  "author": {
+    "name": "Phasathat Jaruchitsophon"
+  }
+}
