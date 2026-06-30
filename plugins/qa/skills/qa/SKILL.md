@@ -42,18 +42,40 @@ stays on the machine: `navigate_page` → `take_snapshot` / `take_screenshot` �
 flow → `list_console_messages` + `list_network_requests` for JS errors and 4xx/5xx. Judge the
 screenshots yourself. If chrome-devtools isn't connected, say so and score the rest — don't block.
 
-### 4. Score from four angles
-Each gets a score out of 10 with a one- or two-line justification, then an overall:
+### 4. Score from four angles — each runs a five-point checklist
+Give each angle a score out of 10 with a justification tied to its five checks, then an overall.
+In the report, show each angle's five checks with a ✓ / ⚠ / ✗ so the score is traceable.
 
-| Angle | Judges |
-| --- | --- |
-| 🧑‍💼 CTO | strategy, risk, maintainability, value, bus-factor |
-| 🛠️ Tech Lead | code quality, architecture, conventions, correctness, CI |
-| 🎨 UX/UI Designer | visual quality, usability, DX, accessibility, copy |
-| 🧪 QA Tester | does it pass, edge cases, what breaks, test coverage |
+**🧑‍💼 CTO — would I bet the roadmap on this?**
+1. **Strategic value & scope** — solves a real problem; scope is coherent, not half-built.
+2. **Risk & security** — attack surface, secrets in the repo, dependency / supply-chain risk, data handling.
+3. **Maintainability & bus-factor** — could someone else run it? docs, structure, no tribal knowledge.
+4. **Cost & sustainability** — runtime / infra cost, free vs paid, tech-debt trajectory.
+5. **Licensing & compliance** — a license is present and correct; third-party obligations are met.
+
+**🛠️ Tech Lead — would I approve this PR?**
+1. **Code quality & readability** — naming, dead code, duplication, function size.
+2. **Architecture & modularity** — separation of concerns, coupling, extensibility.
+3. **Correctness** — logic does what it claims; error handling; boundary conditions.
+4. **Conventions & consistency** — follows the project / house style; lint and format are clean.
+5. **CI/CD & automation** — tests, build, and guards run and pass; regressions are caught.
+
+**🎨 UX/UI Designer — would a user enjoy this?** (no UI → read these as developer experience)
+1. **Visual quality & hierarchy** — layout, spacing, typography, consistency.
+2. **Usability & flow** — the core task completes without confusion.
+3. **Accessibility & i18n** — contrast, keyboard nav, semantics, font / locale rendering.
+4. **Copy & content** — clear, concise, correct; native UI strings preserved.
+5. **Responsiveness & states** — mobile / desktop; loading, empty, and error states handled.
+
+**🧪 QA Tester — does it actually work?**
+1. **Smoke** — builds / starts / validates with exit 0.
+2. **Happy path** — the main flow works end to end.
+3. **Edge cases** — empty, invalid, and oversized input; back button; double-submit.
+4. **Error handling** — graceful failures; no leaked stack traces or silent no-ops.
+5. **Coverage & evidence** — tests exist and pass; results are reproducible.
 
 **The overall reflects the weakest critical path** — don't average a broken core flow up because the
-homepage is pretty. The scale and output format live in `references/rubric.md`.
+homepage is pretty. The 10-point scale and output format live in `references/rubric.md`.
 
 ### 5. Weaknesses — every flaw, in detail
 List all of them, worst first. For each: a **severity tag** (`[blocker]` / `[high]` / `[medium]` /

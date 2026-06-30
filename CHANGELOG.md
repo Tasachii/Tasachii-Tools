@@ -8,8 +8,9 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 
 ### Added
 - `qa`: a new plugin that smoke-tests and QAs a whole project, then scores it from four angles
-  — CTO, tech lead, UX/UI designer, and QA tester — and returns a detailed, fixable weakness
-  list (severity, `file:line`, why it matters, how to fix). It runs the project's own
+  — CTO, tech lead, UX/UI designer, and QA tester, **each against an explicit five-point
+  checklist** shown with ✓ / ⚠ / ✗ so the score is traceable — and returns a detailed, fixable
+  weakness list (severity, `file:line`, why it matters, how to fix). It runs the project's own
   build / lint / test / validate, and for a web app drives a local browser via the
   chrome-devtools MCP (free, local). It never auto-fixes — it scores, then asks.
 

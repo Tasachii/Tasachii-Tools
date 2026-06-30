@@ -148,9 +148,10 @@ browser via the chrome-devtools MCP (free, on your machine, nothing sent to a cl
 | `/qa localhost:5173` · `qa <url>` | Drives the web app in a local browser, then scores the flow |
 | `rate this` · `score this project` | Same — a quality verdict with evidence |
 
-It leads with a four-angle scorecard (`N/10` each plus an overall), then lists every weakness with a
-severity tag, `file:line`, why it matters, and how to fix it. **It never fixes on its own — it
-scores, then asks** whether to fix all, only the critical items, or none.
+It leads with a four-angle scorecard (`N/10` each plus an overall) — every angle scored against an
+explicit five-point checklist shown with ✓ / ⚠ / ✗ — then lists every weakness with a severity tag,
+`file:line`, why it matters, and how to fix it. **It never fixes on its own — it scores, then asks**
+whether to fix all, only the critical items, or none.
 
 ## Repository layout
 

@@ -11,10 +11,12 @@ Anchor to the role's core responsibility first, then modify for polish. "It look
 submit button does nothing" is a 2 for QA, not a 7.
 
 ## What each angle anchors on
-- **🧑‍💼 CTO** — Would I bet the roadmap on this? Risk, cost, maintainability, value, bus-factor.
-- **🛠️ Tech Lead** — Would I approve this PR? Code quality, architecture, conventions, correctness, CI.
-- **🎨 UX/UI Designer** — Would a user enjoy this? Visual quality, usability, accessibility, copy, DX.
-- **🧪 QA Tester** — Does it actually work? Smoke + happy path + edge cases + what breaks + coverage.
+Each angle scores against the explicit **five-point checklist** in `SKILL.md` §4; show those five
+checks with ✓ / ⚠ / ✗ in the report so every score is traceable. The headline question per angle:
+- **🧑‍💼 CTO** — Would I bet the roadmap on this? (value · risk/security · maintainability · cost · licensing)
+- **🛠️ Tech Lead** — Would I approve this PR? (code quality · architecture · correctness · conventions · CI)
+- **🎨 UX/UI Designer** — Would a user enjoy this? (visual · usability · accessibility/i18n · copy · responsiveness)
+- **🧪 QA Tester** — Does it actually work? (smoke · happy path · edge cases · error handling · coverage)
 
 ## Output format
 
