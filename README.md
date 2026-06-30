@@ -121,7 +121,10 @@ the way when you actually mean `run tsc`, `tsc --noEmit`, or any real build comm
 
 ```text
 Tasachii-Tools/
-├── .github/workflows/link-check.yml   # CI — re-checks every Markdown link
+├── .github/workflows/
+│   ├── link-check.yml          # CI — re-checks every Markdown link
+│   └── manifest-check.yml      # CI — plugin version ↔ README drift guard
+├── scripts/check-versions.py            # manifest-check helper
 ├── .claude-plugin/
 │   ├── marketplace.json        # marketplace manifest (name: tasachii-tools)
 │   └── README.md               # install guide
@@ -146,6 +149,15 @@ Tasachii-Tools/
 
 - [x] `readme-craft` — README writer
 - [ ] More personal skills, added one at a time
+
+## Versioning
+
+Each plugin is versioned independently in its own `plugin.json` — that is the number shown
+in the Plugins table above. The marketplace's `metadata.version` tracks the **catalog** (the
+set of plugins and the repo's structure) and moves when a plugin is added or removed, not on
+a single plugin's release; the two are not kept in lockstep. CI (`manifest-check`, via
+`scripts/check-versions.py`) holds each plugin's `plugin.json` version and its Plugins-table
+row together, and checks the marketplace version is valid semver.
 
 ## License
 

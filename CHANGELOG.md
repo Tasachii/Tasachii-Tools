@@ -11,9 +11,15 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
   trigger. Typing it is treated as an unambiguous instruction to fix the current project's
   README — the skill begins the workflow right away instead of asking what the user means.
   Complements the existing `tsc` / `FRM` short aliases.
-- CI: a `manifest-check` workflow asserts `marketplace.json`, `plugin.json`, and the README
-  Plugins table all state the same version — guarding the version drift this release would
+- CI: a `manifest-check` workflow (via `scripts/check-versions.py`) keeps every plugin's
+  `plugin.json` version in lockstep with its row in the README Plugins table, and checks the
+  marketplace version is valid semver — guarding the version drift this release would
   otherwise have shipped.
+
+### Changed
+- Versioning is now independent and documented: each plugin owns its version in `plugin.json`;
+  the marketplace `metadata.version` tracks the catalog (the plugin set and repo structure),
+  not a single plugin's release. CI no longer forces the two to match.
 
 ### Fixed
 - README and the install guide were behind the manifests — the Plugins table showed `0.3.0`
