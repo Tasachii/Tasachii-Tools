@@ -15,6 +15,11 @@ import sys
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 
 
+def _load_json(path):
+    with open(path) as f:
+        return json.load(f)
+
+
 def _readme_table_versions(text):
     """Parse the '## Plugins' markdown table into {plugin_name: version}."""
     out, in_plugins = {}, False
@@ -32,14 +37,15 @@ def _readme_table_versions(text):
 
 def check(root="."):
     errors = []
-    mkt = json.load(open(os.path.join(root, ".claude-plugin/marketplace.json")))
+    mkt = _load_json(os.path.join(root, ".claude-plugin/marketplace.json"))
     mv = mkt["metadata"]["version"]
     if not SEMVER.match(mv):
         errors.append(f"marketplace metadata.version is not semver: {mv!r}")
-    table = _readme_table_versions(open(os.path.join(root, "README.md")).read())
+    with open(os.path.join(root, "README.md")) as f:
+        table = _readme_table_versions(f.read())
     for p in mkt["plugins"]:
         name, src = p["name"], p["source"]
-        pv = json.load(open(os.path.join(root, src, ".claude-plugin/plugin.json")))["version"]
+        pv = _load_json(os.path.join(root, src, ".claude-plugin/plugin.json"))["version"]
         if table.get(name) != pv:
             errors.append(
                 f"README Plugins table lists {name}={table.get(name)} but plugin.json says {pv}"

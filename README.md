@@ -10,7 +10,7 @@ no telemetry; everything runs locally inside Claude Code.
 
 - [Quick start](#quick-start)
 - [Plugins](#plugins)
-- [readme-craft](#readme-craft) · [caffe](#caffe) · [qa](#qa) · [slide-craft](#slide-craft)
+- [craft-readme](#craft-readme) · [craft-caffe](#craft-caffe) · [craft-qa](#craft-qa) · [craft-slides](#craft-slides)
 - [Repository layout](#repository-layout)
 - [Versioning](#versioning) · [License](#license)
 
@@ -20,10 +20,10 @@ Add the marketplace inside Claude Code, then install the plugins you want:
 
 ```text
 /plugin marketplace add Tasachii/Tasachii-Tools
-/plugin install readme-craft@tasachii-tools
-/plugin install caffe@tasachii-tools
-/plugin install qa@tasachii-tools
-/plugin install slide-craft@tasachii-tools
+/plugin install craft-readme@tasachii-tools
+/plugin install craft-caffe@tasachii-tools
+/plugin install craft-qa@tasachii-tools
+/plugin install craft-slides@tasachii-tools
 ```
 
 Restart Claude Code once so the skills load, then trigger by intent — say `tsc` to fix a
@@ -41,16 +41,16 @@ Developing the marketplace locally instead of from GitHub:
 
 | Plugin | Version | What it does |
 | --- | --- | --- |
-| `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
-| `caffe` | 0.2.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only (guards non-macOS). |
-| `qa` | 0.1.0 | Smoke-tests and QAs a project, scores it from four angles (CTO · tech lead · UX/UI · QA), and lists every fixable flaw. Asks before fixing. |
-| `slide-craft` | 0.1.0 | Builds a self-contained HTML slide deck that designs itself around the topic — grounded in real content, Thai/English aware, with presenter notes and a 1920×1080 overflow self-check. |
+| `craft-readme` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
+| `craft-caffe` | 0.2.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only (guards non-macOS). |
+| `craft-qa` | 0.1.0 | Smoke-tests and QAs a project, scores it from four angles (CTO · tech lead · UX/UI · QA), and lists every fixable flaw. Asks before fixing. |
+| `craft-slides` | 0.1.0 | Builds a self-contained HTML slide deck that designs itself around the topic — grounded in real content, Thai/English aware, with presenter notes and a 1920×1080 overflow self-check. |
 
 Every plugin is a **skill**, not a flag-driven command: you talk to Claude Code normally and
 the skill activates when it detects what you want. Each one reads the real project before it
 acts, and none of them touch a network beyond what the task needs.
 
-## readme-craft
+## craft-readme
 
 Writes, rewrites, and updates a project's README in a calm, table-heavy, fact-only style. It
 reads the actual project first — `package.json`, stack, scripts, license, live URL,
@@ -80,7 +80,7 @@ The before/after on a lead paragraph — the single most-rewritten line in any R
 The "after" keeps only what the code proves; every hype word in the "before" is gone because
 none of it could be read from the repo.
 
-## caffe
+## craft-caffe
 
 A small macOS utility — keep the Mac awake so a long job (render, download, browser
 automation, training) isn't interrupted by sleep. It manages a detached `caffeinate -dimsu`
@@ -97,7 +97,7 @@ bails early with a clear message instead of running a `caffeinate` that isn't th
 > Code session — but not a reboot. Closing the lid with no external display or power still
 > sleeps. It can set a permanent `sudo pmset` policy, but only if you ask.
 
-## qa
+## craft-qa
 
 Smoke-test and QA a whole project, then score it the way four reviewers would — CTO, tech
 lead, UX/UI designer, and QA tester. It runs the project's own checks (`build` / `lint` /
@@ -115,7 +115,7 @@ an explicit five-point checklist shown with ✓ / ⚠ / ✗, then lists every we
 severity tag, `file:line`, why it matters, and how to fix it. **It never fixes on its own — it
 scores, then asks** whether to fix all, only the critical items, or none.
 
-## slide-craft
+## craft-slides
 
 Builds a presentation as a single self-contained HTML file — zero dependencies, authored at a
 fixed 1920×1080 stage that scales to any screen, 16:9 everywhere. You talk to Claude Code
@@ -180,22 +180,22 @@ Tasachii-Tools/
 │   ├── marketplace.json         # marketplace manifest (name: tasachii-tools)
 │   └── README.md                # install guide
 ├── plugins/
-│   ├── readme-craft/
+│   ├── craft-readme/
 │   │   ├── .claude-plugin/plugin.json
-│   │   └── skills/readme-craft/
+│   │   └── skills/craft-readme/
 │   │       ├── SKILL.md                       # the skill + workflow
 │   │       └── references/                    # house-style guide, template, 4 exemplars, CI action
-│   ├── caffe/
+│   ├── craft-caffe/
 │   │   ├── .claude-plugin/plugin.json
-│   │   └── skills/caffe/SKILL.md              # keep-awake (caffeinate) utility
-│   ├── qa/
+│   │   └── skills/craft-caffe/SKILL.md              # keep-awake (caffeinate) utility
+│   ├── craft-qa/
 │   │   ├── .claude-plugin/plugin.json
-│   │   └── skills/qa/
+│   │   └── skills/craft-qa/
 │   │       ├── SKILL.md                       # the four-angle QA procedure
 │   │       └── references/rubric.md           # 10-point scale + output format
-│   └── slide-craft/
+│   └── craft-slides/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/slide-craft/
+│       └── skills/craft-slides/
 │           ├── SKILL.md                       # the deck builder + workflow
 │           ├── references/                    # viewport-base.css, presets, thai-bilingual, architecture, verifying
 │           └── scripts/screenshot-check.mjs   # Playwright overflow/overlap checker
@@ -206,7 +206,7 @@ Tasachii-Tools/
 ## Versioning
 
 Each plugin is versioned independently in its own `plugin.json` — the number shown in the
-Plugins table above. The marketplace's `metadata.version` (currently `0.7.0`) is the **repo
+Plugins table above. The marketplace's `metadata.version` (currently `0.8.0`) is the **repo
 release** version: it bumps on each published release (a new plugin, or a notable change),
 while plugin versions move on their own — the two are not kept in lockstep.
 

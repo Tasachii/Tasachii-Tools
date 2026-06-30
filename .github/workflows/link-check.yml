@@ -20,13 +20,13 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          # The reference docs are illustrative skill material — their sample
-          # links and code-block URLs (docs/, images, font CDN snippets) are part
-          # of the example and are not meant to resolve in this repo.
-          # Check only the real, human-facing docs.
+          # The reference docs are illustrative skill material — sample links, the
+          # template's placeholder link targets (`<!-- TODO -->` markers), and code-block
+          # CDN snippets are part of the example and don't resolve as repo doc links.
+          # Exclude both reference trees; check only the real, human-facing docs.
           args: >-
             --no-progress --verbose
-            --exclude-path plugins/readme-craft/skills/readme-craft/references
-            --exclude-path plugins/slide-craft/skills/slide-craft/references
+            --exclude-path plugins/craft-readme/skills/craft-readme/references
+            --exclude-path plugins/craft-slides/skills/craft-slides/references
             "**/*.md"
           fail: true

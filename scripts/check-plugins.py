@@ -17,6 +17,11 @@ SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 REQUIRED = ["name", "version", "description"]
 
 
+def _load_json(path):
+    with open(path) as f:
+        return json.load(f)
+
+
 def _frontmatter(text):
     """Top-level `key: value` pairs from a leading `--- ... ---` YAML block, or None."""
     if not text.startswith("---"):
@@ -34,7 +39,7 @@ def _frontmatter(text):
 
 def check(root="."):
     errors = []
-    mkt = json.load(open(os.path.join(root, ".claude-plugin/marketplace.json")))
+    mkt = _load_json(os.path.join(root, ".claude-plugin/marketplace.json"))
     for p in mkt["plugins"]:
         name, src = p["name"], p["source"]
         pdir = os.path.join(root, src)
@@ -45,7 +50,7 @@ def check(root="."):
         if not os.path.exists(pj_path):
             errors.append(f"{name}: missing .claude-plugin/plugin.json")
             continue
-        pj = json.load(open(pj_path))
+        pj = _load_json(pj_path)
         for f in REQUIRED:
             if not pj.get(f):
                 errors.append(f"{name}: plugin.json missing '{f}'")
@@ -60,7 +65,8 @@ def check(root="."):
                 if not os.path.exists(sp):
                     errors.append(f"{name}/{sk}: missing SKILL.md")
                     continue
-                fm = _frontmatter(open(sp).read())
+                with open(sp) as f:
+                    fm = _frontmatter(f.read())
                 if fm is None:
                     errors.append(f"{name}/{sk}: SKILL.md has no YAML frontmatter")
                     continue
@@ -76,7 +82,7 @@ def main():
         for e in errors:
             print(f"::error::{e}")
         sys.exit(1)
-    n = len(json.load(open(".claude-plugin/marketplace.json"))["plugins"])
+    n = len(_load_json(".claude-plugin/marketplace.json")["plugins"])
     print(f"Plugins valid: {n} plugin(s) checked — manifests and skill frontmatter OK.")
 
 

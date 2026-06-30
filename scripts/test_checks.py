@@ -30,7 +30,8 @@ def _fixture(tmp):
     shutil.copytree(os.path.join(ROOT, ".claude-plugin"), os.path.join(tmp, ".claude-plugin"))
     shutil.copytree(os.path.join(ROOT, "plugins"), os.path.join(tmp, "plugins"))
     shutil.copy(os.path.join(ROOT, "README.md"), os.path.join(tmp, "README.md"))
-    return json.load(open(os.path.join(tmp, ".claude-plugin/marketplace.json")))
+    with open(os.path.join(tmp, ".claude-plugin/marketplace.json")) as f:
+        return json.load(f)
 
 
 def main():
@@ -47,10 +48,11 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         mkt = _fixture(tmp)
         first = mkt["plugins"][0]["name"]
-        open(os.path.join(tmp, "README.md"), "w").write(
-            "## Plugins\n\n| Plugin | Version | What |\n| --- | --- | --- |\n"
-            f"| `{first}` | 9.9.9 | drifted |\n"
-        )
+        with open(os.path.join(tmp, "README.md"), "w") as f:
+            f.write(
+                "## Plugins\n\n| Plugin | Version | What |\n| --- | --- | --- |\n"
+                f"| `{first}` | 9.9.9 | drifted |\n"
+            )
         if not cv.check(tmp):
             failures.append("check-versions did NOT catch a drifted README version")
 
@@ -59,9 +61,11 @@ def main():
         mkt = _fixture(tmp)
         src = mkt["plugins"][0]["source"]
         pj_path = os.path.join(tmp, src, ".claude-plugin/plugin.json")
-        pj = json.load(open(pj_path))
+        with open(pj_path) as f:
+            pj = json.load(f)
         pj.pop("version", None)
-        json.dump(pj, open(pj_path, "w"))
+        with open(pj_path, "w") as f:
+            json.dump(pj, f)
         if not cp.check(tmp):
             failures.append("check-plugins did NOT catch a plugin.json missing 'version'")
 

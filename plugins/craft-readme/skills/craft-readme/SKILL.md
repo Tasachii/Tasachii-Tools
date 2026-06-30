@@ -1,0 +1,195 @@
+---
+name: craft-readme
+description: This skill should be used when the user wants to create, rewrite, or update a project README. Trigger on '/fix readme', '/fix-readme', 'fix readme', 'fix the readme', 'tsc', 'TSC', 'FRM', 'frm', 'write a readme', 'make a readme', 'craft readme', 'readme', 'README.md', 'document this project', or when a repo has no README. When the user types '/fix readme' (or 'fix readme' / 'fix the readme'), treat it as an unambiguous, immediate instruction to fix THIS project's README — begin the workflow right away, do not ask what they mean. ('tsc' and 'FRM' are the short aliases — 'tsc' = the Tasachii-Tools brand shorthand for "fix the readme", 'FRM' = Fix ReadMe.) IMPORTANT — 'tsc' triggers this skill ONLY as a bare README request; do NOT trigger when the user means the TypeScript compiler — i.e. skip when 'tsc' is part of build/compile intent such as 'run tsc', 'tsc --noEmit', 'tsc -b', 'tsc --watch', 'npx tsc', a tsc error/output, or any path/flag after it. Writes READMEs in the author's house style — calm, precise, fact-only, English prose with native UI strings preserved, table-heavy.
+---
+
+# craft-readme
+
+Writes project READMEs in a calm, precise, understated house style. English prose,
+fact-only, table-heavy, with native UI strings preserved exactly as the app shows them.
+
+## Top rule — never invent facts
+
+Do **not** write test counts, bundle sizes, feature lists, version numbers, commands,
+or URLs that have not been verified. Three options, in order:
+
+1. **Read** the real source — `package.json`, lockfiles, config, `src/`, `docs/`.
+2. **Ask** the user when a fact cannot be read.
+3. **Leave a TODO** — `<!-- TODO: verify test count -->` — when neither is possible.
+
+A marked TODO is always correct; a confident guess is a defect. Vague claims
+("fast", "lots of tests", "blazingly") are banned — concrete numbers only.
+
+## Workflow
+
+### 1 — Choose the archetype and audience
+
+The house style is one voice, but the *shape* changes with what you are documenting.
+Pick the closest archetype first and read its exemplar — that is the structure to follow:
+
+| Archetype | Exemplar | What leads | What matters most |
+| --- | --- | --- | --- |
+| End-user app (GUI/PWA/mobile, has a live demo or screenshots) | `references/example-tododesu.md` | Lead paragraph → Try it now → screenshots | Features grouped by area, the experience |
+| Library / package (imported by other code) | `references/example-library.md` | **Quickstart** (install + 5-line usage) | API table, compatibility, zero-config use |
+| Public OSS project (accepts contributions) | `references/example-oss-library.md` | **Quickstart** + a Contents TOC | Badges, API, Contributing/Security/Conduct sibling files |
+| Backend service / API (deployed, not imported) | `references/example-service.md` | **Quickstart** (run it: `docker compose up`) | Env-var + endpoint tables, deploy, health |
+| CLI tool | `example-tododesu.md` (its CLI section) | Quickstart (install + first command) | Command reference block, flags |
+
+If the project mixes archetypes (e.g. an app *and* a CLI, like TodoDesu), follow the
+dominant one and borrow sections from the others.
+
+**Audience drives ordering.** A library or service is read by developers who want to run
+or import it in 30 seconds — lead with a **Quickstart** *before* the "Why this exists"
+prose. An end-user app or a portfolio piece can lead with the lead paragraph and the
+experience. When the README serves an internal team, drop marketing roadmap/badges and
+add the operational sections (deploy, env, health) instead.
+
+### 2 — Gather facts first
+
+Before writing a single section, collect:
+
+| Fact | Where to look |
+| --- | --- |
+| Stack / language | `package.json`, `pyproject.toml`, `go.mod`, file extensions |
+| Scripts / commands | `package.json` `scripts`, `Makefile`, CI configs |
+| Live URL | `package.json` `homepage`, deploy config, ask user |
+| License | `LICENSE` file, `package.json` `license` |
+| Author | `package.json` `author`, git config, ask user |
+| Local-first / offline | service-worker, no-backend, localStorage usage |
+| Screenshots | `docs/`, `assets/`, `.github/` image files that actually exist — if none exist and it is a visual app, plan to **ask the user to capture them** (see §3.4) |
+| Node / runtime version | `engines`, `.nvmrc`, `.tool-versions` |
+
+If a fact is missing and cannot be read, ask the user a short batch of questions
+rather than guessing.
+
+### 3 — Write sections in this order
+
+This is the canonical shape for an **end-user app**, modelled on
+`references/example-tododesu.md`. For a **library or service**, lead with a Quickstart
+and follow `example-library.md` / `example-service.md` instead — the sections below
+still apply, only the order shifts (Quickstart first, screenshots usually dropped).
+Use `##` headings (no `---` rules between them). Drop any section that genuinely does
+not apply; keep the order of the ones that remain.
+
+**Long READMEs get a Contents list.** When the README runs past ~6 sections or one
+screen, add a `## Contents` table-of-contents with anchor links right after the lead
+(or after the badges), the way `references/example-oss-library.md` does. Short ones
+don't need it. **Public OSS projects** also reference their sibling files from the body
+— a Contributing section linking `CONTRIBUTING.md`, a Security section linking
+`SECURITY.md`, and the `CODE_OF_CONDUCT.md` — rather than inlining all of it.
+
+1. **Title** — `# Name native。` or `Name（native script）` or `Name native — English subtitle`.
+2. **Lead paragraph** — one dense paragraph right under the title: what it does + the
+   core idea, ending with the privacy/local-first stance when true
+   ("No accounts, no cloud, no tracking.").
+3. **Try it now** — `**Try it now:** <url>` when there is a live demo. (Badges are
+   optional and only used when their data is verified — license, version.)
+4. **Screenshots — drive them in for any visual app.** Paired 2-column tables with a
+   descriptive caption per image in the header row (`| Today — Wa theme | Focus — ensō
+   ring |`), exactly like `references/example-tododesu.md`. Reference **only images that
+   exist on disk** — never link a file that is not there. But for an end-user app
+   (web/PWA/mobile/desktop), a screenshot demo is the point of the README — what makes
+   TodoDesu and Pocketo worth opening — so **do not silently drop this section when the
+   app has no images yet.** Instead, actively get them in:
+   - **Name the shots to capture** — 2–6 specific views: the home/list screen, the main
+     action, a signature feature, and a dark/alt theme if there is one.
+   - **Give an exact path and naming** — tell the user to save to `docs/images/` as e.g.
+     `today-wa.jpg`, `focus-wa.jpg`; the table pairs them two-up.
+   - **Offer the capture method** — OS screenshot, a browser/device frame, recommended
+     width (~1200px for web, the real device frame for mobile).
+   - **Scaffold, don't fake** — until the files land, write the 2-column table with the
+     agreed paths *behind a visible `<!-- TODO: add screenshot docs/images/today-wa.jpg
+     -->`* marker, not a live (broken) image link. The section is then ready the moment
+     the images are dropped in, and the never-invent rule still holds.
+5. **Why this exists** — the choice or insight the project resolves; the core design idea.
+6. **Features** — grouped under `###` subheadings (e.g. Task management / Views /
+   Platform). Bullets are full, specific sentences with parenthetical detail; **bold**
+   the marquee items. This is where the README earns its detail.
+7. **Architecture** — an ASCII diagram and/or a package/module table
+   (`Package | Role | Key technology`), then a "Design decisions worth noting:" list of
+   **bold lead-in.** bullets that each explain *why*.
+8. **Requirements** — runtime versions and OS notes, as bullets.
+9. **Installation** — clean code blocks (no comments); prose between blocks for context.
+   Split Windows vs Mac only when the commands actually differ.
+10. **Usage** — `###` subsections as needed: Development · (Hosting/Deploy) · Daily use ·
+    CLI reference (aligned plain block) · a short numbered tutorial · Configuration table.
+11. **Running commands** — keep code blocks clean. Add an inline `# ...` comment only
+    when a command's purpose isn't obvious; never annotate self-explanatory commands.
+12. **Testing** — the command plus one line on what the suite covers.
+13. **Project documentation** — bullet list of doc links, each with an `—` description.
+14. **Roadmap** — what shipped and what's next, as prose or a checklist of real plans.
+15. **License** — `MIT © Author name`, plus any domain disclaimer.
+
+### 4 — Style
+
+- Prefer tables and short bullets over long prose.
+- Explain **why** for key design choices — a "Design Decisions" table of `Topic | Decision`.
+- Stack as a single bullet, items joined by middot `·`.
+- Connectors: em-dash `—` and middot `·`. Minimal emoji; functional symbols
+  (`◀ ▶ ⇄ ✓`) are fine.
+- Tone: calm, precise, understated, confident. Japanese-aesthetic flavor **only**
+  when the project genuinely has it — never forced.
+
+### 5 — Preserve native UI strings
+
+When the app shows Thai (or any non-English) button labels, menu items, or copy,
+keep them **exactly** as displayed. Write the surrounding prose in English, but never
+translate the live UI strings away. Example: a button labelled `บันทึก` stays
+`บันทึก` in the README, optionally glossed once in parentheses.
+
+### 6 — Verify the README itself
+
+A README that links to a missing image or a dead path is a defect. After writing, prove
+the document holds up — do not just eyeball it:
+
+1. **Every referenced image exists on disk.** List the image paths the README uses and
+   confirm each file is present:
+
+   ```bash
+   grep -oE '!\[[^]]*\]\(([^)]+)\)' README.md | sed -E 's/.*\(([^)]+)\)/\1/' \
+     | while read -r p; do [ -f "$p" ] && echo "ok   $p" || echo "MISS $p"; done
+   ```
+
+   Any `MISS` line means the image link is broken — fix the path or remove the image.
+
+2. **Relative doc links resolve.** Check that local links (e.g. `docs/API.md`) point at
+   files that exist; fix or drop the ones that do not.
+
+3. **No invented facts slipped in.** Re-read every number, command, and URL against the
+   source. Any claim you could not verify must be a visible `<!-- TODO -->`, not prose.
+
+4. **Commands actually run** (when feasible) — at minimum the install and test commands.
+
+5. **Plugin/manifest validation**, when the repo is a Claude plugin or marketplace:
+
+   ```bash
+   claude plugin validate .
+   claude plugin validate plugins/<name>
+   ```
+
+Report the result of each check rather than assuming it passed.
+
+**Keep links from rotting later.** The checks above are a one-time pass; external links
+still die over time. For any repo with CI, offer to drop in the ready-made workflow at
+`references/workflow-link-check.yml` (copy it to `.github/workflows/link-check.yml`) —
+it re-checks every Markdown link on each push and weekly via lychee.
+
+## References
+
+Load these for the full rules, a worked example, and a ready-to-fill skeleton:
+
+- **`references/example-tododesu.md`** — exemplar for an **end-user app**: the canonical
+  shape. Read this first for app/PWA/mobile projects. Copy its *form*, never its facts.
+- **`references/example-library.md`** — exemplar for a **library/package**: quickstart
+  first, API table front and centre, no forced native title.
+- **`references/example-service.md`** — exemplar for a **backend service/API**: run-it
+  first, env-var and endpoint tables, deploy and health sections, a status block.
+- **`references/example-oss-library.md`** — exemplar for a **public OSS project**: a
+  Contents TOC, badges, and Contributing/Security/Conduct sibling-file references.
+- **`references/workflow-link-check.yml`** — a copy-ready GitHub Action that re-checks
+  every Markdown link on push and weekly; drop it in at `.github/workflows/`.
+- **`references/style-guide.md`** — the complete house-style rulebook, with
+  BEFORE/AFTER examples. Read this before writing prose.
+- **`references/template.md`** — a fill-in README skeleton with every section as a
+  heading and `<!-- TODO -->` placeholders. Copy it, then replace placeholders with
+  verified facts in one pass.

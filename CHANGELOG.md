@@ -4,6 +4,31 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.8.0 — 2026-06-30
+
+### Changed
+- **Prefixed every plugin with `craft-`** for one consistent, easy-to-type namespace —
+  `readme-craft` → `craft-readme`, `caffe` → `craft-caffe`, `qa` → `craft-qa`, `slide-craft` →
+  `craft-slides`. Each rename moves the plugin dir, `plugin.json` name, marketplace entry, skill
+  (dir + `SKILL.md` name), README sections, and internal reference strings. Install commands are now
+  `/plugin install craft-readme@tasachii-tools` (and `craft-caffe` / `craft-qa` / `craft-slides`);
+  the skills are invoked as `/craft-readme`, `/craft-caffe`, `/craft-qa`, `/craft-slides`. Every
+  friendly trigger is kept — `tsc` / `/fix readme` / `FRM`, `/caffe` / "keep awake", `/qa` / "rate
+  this", `/slides` / "make a deck", and all Thai phrases — so existing phrasing still works.
+- Marketplace `metadata.version` → 0.8.0 (a notable catalog change: all four plugins renamed).
+  Plugin versions are unaffected — `craft-readme` 0.4.0, `craft-caffe` 0.2.0, `craft-qa` 0.1.0,
+  `craft-slides` 0.1.0.
+- `scripts/`: all file reads/writes now use `with open(...)` context managers (no dangling handles).
+
+### Added
+- CI: a `ruff check scripts/` step in `manifest-check`, so the guard scripts are linted on every
+  push/PR instead of relying on a local run.
+
+### Fixed
+- The install guide (`.claude-plugin/README.md`) was missing the slides plugin entirely — it listed
+  only three plugins. It now lists all four (`craft-readme` / `craft-caffe` / `craft-qa` /
+  `craft-slides`) in the install block, trigger line, and table.
+
 ## 0.7.0 — 2026-06-30
 
 ### Added

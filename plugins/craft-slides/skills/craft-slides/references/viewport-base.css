@@ -1,0 +1,79 @@
+/* ============================================================
+   craft-slides · FIXED 16:9 STAGE — mandatory base styles.
+   Copy this ENTIRE file into every deck's <style> block.
+
+   Slides are authored at 1920×1080 and the whole stage is
+   scaled as one unit to fit the window. Content never reflows
+   per device — the deck letterboxes, it does not re-layout.
+   ============================================================ */
+
+/* 1 · Lock the browser window */
+html, body {
+  width: 100%; height: 100%;
+  margin: 0; overflow: hidden;
+  background: var(--stage-bg, #0a0a0a);
+}
+
+/* 2 · Full-window viewport that holds the stage */
+.deck-viewport {
+  position: fixed; inset: 0; overflow: hidden;
+  background: var(--stage-bg, #0a0a0a);
+}
+
+/* 3 · The fixed 1920×1080 design canvas.
+       JS sets transform: translate(...) scale(...). */
+.deck-stage {
+  position: absolute; left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden; transform-origin: 0 0;
+  background: var(--slide-bg, #fff);
+}
+
+/* 4 · Slides stack inside the fixed stage. Visibility is switched
+       with .active/.visible — NEVER with display:none/block, which a
+       later layout rule could override and reveal every slide at once.
+       Put flex/grid on an inner wrapper, never on .slide itself. */
+.slide {
+  position: absolute; inset: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden; display: block;
+  visibility: hidden; opacity: 0; pointer-events: none;
+  background: var(--slide-bg, #fff);
+}
+.slide.active, .slide.visible {
+  visibility: visible; opacity: 1; pointer-events: auto; z-index: 1;
+}
+
+/* 5 · Keep media inside authored slide bounds */
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+
+/* 6 · Presentation chrome lives outside the slide design system */
+.deck-controls {
+  position: fixed; left: 50%; bottom: 22px;
+  transform: translateX(-50%); z-index: 1000;
+}
+
+/* 7 · Print one fixed-size slide per page (PDF export path) */
+@media print {
+  html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+  .deck-viewport { position: static; overflow: visible; background: #fff; }
+  .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+  .slide {
+    position: relative; display: block !important;
+    visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+    width: 1920px; height: 1080px; break-after: page; page-break-after: always;
+  }
+  .slide:last-child { break-after: auto; page-break-after: auto; }
+  .deck-controls { display: none !important; }
+}
+
+/* 8 · Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* 9 · Negating a CSS function needs calc(-1 * …). A bare leading
+       minus (e.g. -clamp(...)) is silently dropped by browsers. */

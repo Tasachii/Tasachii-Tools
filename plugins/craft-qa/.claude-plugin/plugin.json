@@ -1,0 +1,8 @@
+{
+  "name": "craft-qa",
+  "version": "0.1.0",
+  "description": "Smoke-test and QA a whole project, then score it from four angles — CTO, tech lead, UX/UI designer, QA tester — with a detailed, fixable weakness list. Drives a local browser (chrome-devtools) for web apps. Never auto-fixes — it scores, then asks.",
+  "author": {
+    "name": "Phasathat Jaruchitsophon"
+  }
+}
