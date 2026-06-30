@@ -31,6 +31,7 @@ no README.
 | Plugin | Description |
 | --- | --- |
 | `readme-craft` | Create, rewrite, or update project READMEs in a calm, precise, fact-only house style — never invents facts. |
+| `caffe` | Keep the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only. |
 
 ## License
 

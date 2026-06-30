@@ -31,6 +31,7 @@ Developing the marketplace locally instead of from GitHub:
 | Plugin | Version | What it does |
 | --- | --- | --- |
 | `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
+| `caffe` | 0.1.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only. |
 
 ## readme-craft
 
@@ -117,6 +118,22 @@ the way when you actually mean `run tsc`, `tsc --noEmit`, or any real build comm
 | Form | Tables and short bullets over long prose; key choices state their *why*. |
 | Tone | Calm, precise, understated. No "fast" / "robust" / "production-ready" filler — concrete numbers only. |
 
+## caffe
+
+A small macOS utility skill — keep the Mac awake so a long job (render, download, browser
+automation, training) isn't interrupted by sleep. It manages a detached `caffeinate -dimsu`
+process; nothing is installed and nothing persists past a reboot.
+
+| You type in Claude Code | What happens |
+| --- | --- |
+| `/caffe` · `caffe` · `keep awake` · `อย่าให้เครื่องหลับ` | Starts keep-awake — display, idle, disk, and system sleep are all held off |
+| `caffe off` · `ปิด caffe` | Stops it; the Mac sleeps normally again |
+| `caffe status` | Reports whether keep-awake is on and which sleep assertions are held |
+
+> Runs `caffeinate` detached with `nohup`, so it survives closing the terminal or the Claude
+> Code session — but not a reboot. Closing the laptop lid with no external display or power
+> still sleeps. It can set a permanent `sudo pmset` policy, but only if you ask.
+
 ## Repository layout
 
 ```text
@@ -129,18 +146,21 @@ Tasachii-Tools/
 │   ├── marketplace.json        # marketplace manifest (name: tasachii-tools)
 │   └── README.md               # install guide
 ├── plugins/
-│   └── readme-craft/
+│   ├── readme-craft/
+│   │   ├── .claude-plugin/plugin.json
+│   │   └── skills/readme-craft/
+│   │       ├── SKILL.md                       # the skill + workflow
+│   │       └── references/
+│   │           ├── style-guide.md             # full house-style rulebook
+│   │           ├── template.md                # fill-in README skeleton
+│   │           ├── example-tododesu.md        # exemplar — end-user app
+│   │           ├── example-library.md         # exemplar — library/package
+│   │           ├── example-service.md         # exemplar — backend service
+│   │           ├── example-oss-library.md     # exemplar — public OSS project
+│   │           └── workflow-link-check.yml    # copy-ready link-check Action
+│   └── caffe/
 │       ├── .claude-plugin/plugin.json
-│       └── skills/readme-craft/
-│           ├── SKILL.md                       # the skill + workflow
-│           └── references/
-│               ├── style-guide.md             # full house-style rulebook
-│               ├── template.md                # fill-in README skeleton
-│               ├── example-tododesu.md        # exemplar — end-user app
-│               ├── example-library.md         # exemplar — library/package
-│               ├── example-service.md         # exemplar — backend service
-│               ├── example-oss-library.md     # exemplar — public OSS project
-│               └── workflow-link-check.yml    # copy-ready link-check Action
+│       └── skills/caffe/SKILL.md           # keep-awake (caffeinate) utility
 ├── CHANGELOG.md
 └── README.md
 ```
@@ -148,6 +168,7 @@ Tasachii-Tools/
 ## Roadmap
 
 - [x] `readme-craft` — README writer
+- [x] `caffe` — keep-awake utility
 - [ ] More personal skills, added one at a time
 
 ## Versioning

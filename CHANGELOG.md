@@ -4,6 +4,18 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.5.0 — 2026-06-30
+
+### Added
+- `caffe`: a new plugin that keeps the Mac awake for long-running jobs — a thin wrapper over
+  macOS `caffeinate -dimsu` with plain-language on / off / status. The keep-awake process is
+  detached (`nohup`), so it survives closing the terminal or the Claude Code session, but not
+  a reboot. macOS only.
+
+### Changed
+- Marketplace `metadata.version` → 0.5.0 (the catalog grew: `caffe` added). Plugin versions
+  are unaffected — `readme-craft` stays at 0.4.0.
+
 ## 0.4.0 — 2026-06-30
 
 ### Added
