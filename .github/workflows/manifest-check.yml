@@ -1,0 +1,28 @@
+name: Manifest check
+
+on:
+  push:
+    paths: ["**/*.json", "**/*.md", ".github/workflows/manifest-check.yml"]
+  pull_request:
+    paths: ["**/*.json", "**/*.md", ".github/workflows/manifest-check.yml"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Versions agree across manifests and the README
+        run: |
+          set -euo pipefail
+          MKT=$(python3 -c 'import json;print(json.load(open(".claude-plugin/marketplace.json"))["metadata"]["version"])')
+          PLG=$(python3 -c 'import json;print(json.load(open("plugins/readme-craft/.claude-plugin/plugin.json"))["version"])')
+          echo "marketplace=$MKT plugin=$PLG"
+          test "$MKT" = "$PLG" || { echo "::error::marketplace.json ($MKT) != plugin.json ($PLG)"; exit 1; }
+          # README Plugins table must list the shipped version (backticks stripped before match).
+          tr -d '\140' < README.md | grep -qE "readme-craft \| ${PLG} \|" \
+            || { echo "::error::README Plugins table version != ${PLG}"; exit 1; }
+          echo "Versions consistent ✓"

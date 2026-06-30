@@ -22,8 +22,9 @@ Locally, before pushing:
 /plugin install readme-craft@tasachii-tools
 ```
 
-After installing, the `readme-craft` skill triggers on "write a readme", "readme",
-"README.md", "document this project", or when a repo has no README.
+After installing, the `readme-craft` skill triggers on "/fix readme", "fix readme", "tsc",
+"FRM", "write a readme", "readme", "README.md", "document this project", or when a repo has
+no README.
 
 ## Plugins
 

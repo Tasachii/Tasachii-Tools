@@ -30,7 +30,7 @@ Developing the marketplace locally instead of from GitHub:
 
 | Plugin | Version | What it does |
 | --- | --- | --- |
-| `readme-craft` | 0.3.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
+| `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
 
 ## readme-craft
 
@@ -90,7 +90,7 @@ Every hype word in the "before" is gone because none of it could be read from th
 
 | You type in Claude Code | What happens |
 | --- | --- |
-| `tsc` · `FRM` · `fix readme` | Shortest triggers — `tsc` (Tasachii-Tools shorthand) and `FRM` ("Fix ReadMe"); reads your code and drafts/updates the README |
+| `/fix readme` · `fix readme` · `tsc` · `FRM` | Shortest triggers — `/fix readme` / `fix readme` (says it outright), `tsc` (Tasachii-Tools shorthand), and `FRM` ("Fix ReadMe"); reads your code and drafts/updates the README |
 | `write a readme` · `make a readme` | Same thing, spelled out |
 | `readme` · `README.md` | Short keyword still triggers |
 | `document this project` | Gathers facts, then writes |
