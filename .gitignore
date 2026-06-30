@@ -8,3 +8,7 @@
 # Logs / temp
 *.log
 .omc/
+
+# Python
+__pycache__/
+*.pyc
