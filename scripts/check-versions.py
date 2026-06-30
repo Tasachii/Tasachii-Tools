@@ -1,35 +1,60 @@
 #!/usr/bin/env python3
 """Guard against version drift across the marketplace, each plugin, and the README.
 
-- Every plugin's `plugin.json` version must appear in the README Plugins table.
+- Every plugin's `plugin.json` version must match its row in the README "## Plugins" table.
 - The marketplace `metadata.version` must be valid semver.
 
-Plugin versions and the marketplace (catalog) version are intentionally INDEPENDENT —
-this script does not require them to match. Run from the repo root.
+Plugin versions and the marketplace (repo release) version are independent — this does NOT
+require them to match. The README table is parsed structurally, so it tolerates layout changes.
 """
 import json
+import os
 import re
 import sys
 
-mkt = json.load(open(".claude-plugin/marketplace.json"))
-readme = open("README.md").read().replace("`", "")  # drop backticks so table cells match plainly
-errors = []
+SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 
-mv = mkt["metadata"]["version"]
-if not re.match(r"^\d+\.\d+\.\d+$", mv):
-    errors.append(f"marketplace metadata.version is not semver: {mv!r}")
 
-for p in mkt["plugins"]:
-    name, src = p["name"], p["source"]
-    pv = json.load(open(f"{src}/.claude-plugin/plugin.json"))["version"]
-    if f"{name} | {pv} |" not in readme:
-        errors.append(
-            f"README Plugins table has no row '{name} | {pv} |' (plugin.json says {pv})"
-        )
+def _readme_table_versions(text):
+    """Parse the '## Plugins' markdown table into {plugin_name: version}."""
+    out, in_plugins = {}, False
+    for line in text.splitlines():
+        s = line.strip()
+        if s.startswith("## "):
+            in_plugins = s.lower().startswith("## plugins")
+            continue
+        if in_plugins and s.startswith("|"):
+            cells = [c.strip().strip("`") for c in s.strip("|").split("|")]
+            if len(cells) >= 2 and SEMVER.match(cells[1]):  # skips header + separator rows
+                out[cells[0]] = cells[1]
+    return out
 
-if errors:
-    for e in errors:
-        print(f"::error::{e}")
-    sys.exit(1)
 
-print("Versions consistent: each plugin matches the README; marketplace version is semver.")
+def check(root="."):
+    errors = []
+    mkt = json.load(open(os.path.join(root, ".claude-plugin/marketplace.json")))
+    mv = mkt["metadata"]["version"]
+    if not SEMVER.match(mv):
+        errors.append(f"marketplace metadata.version is not semver: {mv!r}")
+    table = _readme_table_versions(open(os.path.join(root, "README.md")).read())
+    for p in mkt["plugins"]:
+        name, src = p["name"], p["source"]
+        pv = json.load(open(os.path.join(root, src, ".claude-plugin/plugin.json")))["version"]
+        if table.get(name) != pv:
+            errors.append(
+                f"README Plugins table lists {name}={table.get(name)} but plugin.json says {pv}"
+            )
+    return errors
+
+
+def main():
+    errors = check(".")
+    if errors:
+        for e in errors:
+            print(f"::error::{e}")
+        sys.exit(1)
+    print("Versions consistent: each plugin matches the README; marketplace version is semver.")
+
+
+if __name__ == "__main__":
+    main()

@@ -4,6 +4,23 @@ All notable changes to Tasachii-Tools are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates are UTC.
 
+## 0.6.1 — 2026-06-30
+
+### Added
+- `scripts/check-plugins.py` + a CI step: structurally validates every `plugin.json` and each
+  `SKILL.md`'s frontmatter, so a malformed plugin is caught in CI without needing the Claude CLI.
+- `scripts/test_checks.py` + a CI step: self-tests both guards — they must pass on the real repo
+  and must catch an injected version drift and a malformed plugin.
+- `caffe`: an early macOS guard — on a non-Darwin host it bails with a clear message and points at
+  the platform equivalent, instead of running a `caffeinate` that isn't there.
+- README: a Contents table of contents.
+
+### Changed
+- `scripts/check-versions.py` now parses the README "## Plugins" table structurally (tolerant of
+  layout / backtick changes) instead of substring-matching.
+- Versioning doc clarified: `metadata.version` is the marketplace's **repo release** version
+  (it bumps each release); plugins stay independently versioned. `caffe` → 0.2.0; marketplace → 0.6.1.
+
 ## 0.6.0 — 2026-06-30
 
 ### Added

@@ -20,11 +20,13 @@ Locally, before pushing:
 
 ```text
 /plugin install readme-craft@tasachii-tools
+/plugin install caffe@tasachii-tools
+/plugin install qa@tasachii-tools
 ```
 
-After installing, the `readme-craft` skill triggers on "/fix readme", "fix readme", "tsc",
-"FRM", "write a readme", "readme", "README.md", "document this project", or when a repo has
-no README.
+Each skill triggers by intent, no flags — `tsc` / `/fix readme` for `readme-craft`, `/caffe` or
+"keep awake" for `caffe`, and `/qa` or "score this project" for `qa`. The repo README lists the
+full trigger set for each.
 
 ## Plugins
 

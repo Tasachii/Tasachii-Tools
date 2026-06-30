@@ -12,6 +12,16 @@ never sleeps while long-running work is in progress.
 The process is started with `nohup ... &` so it **survives closing this terminal / Claude Code session**
 (but NOT a reboot — for a permanent setting use `sudo pmset`, offer it only if asked).
 
+## macOS only — check before doing anything
+`caffeinate` exists only on macOS. If this isn't macOS, stop and say so — don't run a command that
+isn't there. Point the user at the equivalent (Linux: `systemd-inhibit` or the `caffeine` app;
+Windows: `powercfg` / PowerToys Awake).
+
+```bash
+[ "$(uname)" = "Darwin" ] && command -v caffeinate >/dev/null \
+  || { echo "caffe is macOS-only (got $(uname)) — not running"; exit 0; }
+```
+
 ## Decide the intent from the user's words
 - "caffe", "caffe mode", "keep awake", "เปิดโหมดไม่หลับ" → **ON**
 - "caffe off", "caffe stop", "ปิด caffe", "ให้เครื่องหลับได้" → **OFF**

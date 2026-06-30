@@ -6,23 +6,33 @@ telemetry; everything runs locally inside Claude Code.
 
 **Repo** — https://github.com/Tasachii/Tasachii-Tools · **Owner** — Phasathat Jaruchitsophon
 
+## Contents
+
+- [Quick start](#quick-start)
+- [Plugins](#plugins)
+- [readme-craft](#readme-craft) · [caffe](#caffe) · [qa](#qa)
+- [Repository layout](#repository-layout)
+- [Roadmap](#roadmap) · [Versioning](#versioning) · [License](#license)
+
 ## Quick start
 
-Install from GitHub inside Claude Code:
+Install from GitHub inside Claude Code, then add the plugins you want:
 
 ```text
 /plugin marketplace add Tasachii/Tasachii-Tools
 /plugin install readme-craft@tasachii-tools
+/plugin install caffe@tasachii-tools
+/plugin install qa@tasachii-tools
 ```
 
-Restart Claude Code once so the skill loads, then open a project and say `tsc` (or
-`write a readme`).
+Restart Claude Code once so the skills load, then trigger by intent — say `tsc` for a README,
+`/caffe` to keep the Mac awake, or `/qa` to score a project.
 
 Developing the marketplace locally instead of from GitHub:
 
 ```text
 /plugin marketplace add .
-/plugin install readme-craft@tasachii-tools
+/plugin install <plugin>@tasachii-tools
 /plugin marketplace update tasachii-tools   # pull the latest after pushing a change
 ```
 
@@ -31,7 +41,7 @@ Developing the marketplace locally instead of from GitHub:
 | Plugin | Version | What it does |
 | --- | --- | --- |
 | `readme-craft` | 0.4.0 | Writes and rewrites project READMEs in a fact-only house style. Reads the real code or asks — never invents facts. |
-| `caffe` | 0.1.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only. |
+| `caffe` | 0.2.0 | Keeps the Mac awake for long jobs — a thin `caffeinate` wrapper with on / off / status. macOS only (guards non-macOS). |
 | `qa` | 0.1.0 | Smoke-tests and QAs a project, scores it from four angles (CTO · tech lead · UX/UI · QA), and lists every fixable flaw. Asks before fixing. |
 
 ## readme-craft
@@ -159,8 +169,11 @@ whether to fix all, only the critical items, or none.
 Tasachii-Tools/
 ├── .github/workflows/
 │   ├── link-check.yml          # CI — re-checks every Markdown link
-│   └── manifest-check.yml      # CI — plugin version ↔ README drift guard
-├── scripts/check-versions.py            # manifest-check helper
+│   └── manifest-check.yml      # CI — versions, plugin validation, guard self-test
+├── scripts/
+│   ├── check-versions.py        # README ↔ plugin-version drift guard
+│   ├── check-plugins.py         # plugin.json + SKILL.md structural validation
+│   └── test_checks.py           # self-test for both guards
 ├── .claude-plugin/
 │   ├── marketplace.json        # marketplace manifest (name: tasachii-tools)
 │   └── README.md               # install guide
@@ -198,12 +211,13 @@ Tasachii-Tools/
 
 ## Versioning
 
-Each plugin is versioned independently in its own `plugin.json` — that is the number shown
-in the Plugins table above. The marketplace's `metadata.version` tracks the **catalog** (the
-set of plugins and the repo's structure) and moves when a plugin is added or removed, not on
-a single plugin's release; the two are not kept in lockstep. CI (`manifest-check`, via
-`scripts/check-versions.py`) holds each plugin's `plugin.json` version and its Plugins-table
-row together, and checks the marketplace version is valid semver.
+Each plugin is versioned independently in its own `plugin.json` — the number shown in the Plugins
+table above. The marketplace's `metadata.version` is the **repo release** version: it bumps on each
+published release (a new plugin, or a notable change to an existing one), while plugin versions move
+on their own — the two are not kept in lockstep. CI (`manifest-check`) enforces it: `check-versions.py`
+holds each plugin's `plugin.json` version and its Plugins-table row together and checks the marketplace
+version is semver, `check-plugins.py` validates every manifest and skill, and `test_checks.py` self-tests
+both guards.
 
 ## License
 

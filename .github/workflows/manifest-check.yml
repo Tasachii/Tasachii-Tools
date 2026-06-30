@@ -2,11 +2,9 @@ name: Manifest check
 
 on:
   push:
-    paths:
-      ["**/*.json", "**/*.md", "scripts/check-versions.py", ".github/workflows/manifest-check.yml"]
+    paths: ["**/*.json", "**/*.md", "scripts/**", ".github/workflows/manifest-check.yml"]
   pull_request:
-    paths:
-      ["**/*.json", "**/*.md", "scripts/check-versions.py", ".github/workflows/manifest-check.yml"]
+    paths: ["**/*.json", "**/*.md", "scripts/**", ".github/workflows/manifest-check.yml"]
   workflow_dispatch: {}
 
 permissions:
@@ -19,3 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Plugin versions match the README; marketplace version is semver
         run: python3 scripts/check-versions.py
+      - name: Plugin manifests and skill frontmatter are structurally valid
+        run: python3 scripts/check-plugins.py
+      - name: Guards self-test (pass on repo, catch injected drift)
+        run: python3 scripts/test_checks.py
